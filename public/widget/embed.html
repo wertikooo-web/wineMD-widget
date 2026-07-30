@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Wine AI — Digital Sommelier</title>
+  <link rel="stylesheet" href="/widget/widget.css">
+</head>
+<body>
+  <main id="widgetShell" class="widget-shell state-disconnected" aria-live="polite">
+    <img class="ui-background" src="/widget/wine-ai-background.png" alt="Wine AI — Digital Sommelier of Moldova">
+
+    <div class="auto-language" aria-label="Automatic language detection">🌐 AUTO</div>
+
+    <button id="closeButton" class="close-button" type="button" aria-label="Закрыть">×</button>
+
+    <div id="statusBubble" class="status-bubble" hidden>
+      <span class="status-dot"></span>
+      <span id="statusLabel">ОТКЛЮЧЕНО</span><span id="permissionHint" hidden></span>
+    </div>
+
+    <div class="wave-overlay wave-left" aria-hidden="true"></div>
+    <div class="wave-overlay wave-right" aria-hidden="true"></div>
+
+    <button id="talkButton" class="talk-hotspot" type="button" aria-label="Удерживайте кнопку и говорите">
+      <span class="sr-only" id="talkButtonText">Говорить</span>
+    </button>
+
+    <button id="connectButton" class="connect-button" type="button">CONNECT</button>
+
+    <section id="recordingPanel" hidden aria-hidden="true">
+      <p id="recordingMeta"></p>
+      <audio id="audioPlayer" controls preload="metadata"></audio>
+      <button id="transcribeButton" type="button"></button>
+      <div id="transcriptPanel" hidden><p id="transcriptText"></p></div>
+      <div id="answerPanel" hidden><p id="answerText"></p><audio id="answerAudio" preload="none" hidden></audio><div id="sourcesPanel" hidden><ul id="sourcesList"></ul></div></div>
+    </section>
+    <div id="productPlaceholder" hidden></div><div id="productList" hidden></div>
+  </main>
+  <script src="/widget/widget.js"></script>
+</body>
+</html>

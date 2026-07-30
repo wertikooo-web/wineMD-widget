@@ -1,0 +1,1575 @@
+{
+  "schemaVersion": "1.0",
+  "datasetId": "ghid-vin-2023-ro-en-seed-v1",
+  "title": "Ghidul Vinului / Wine Guide 2023 — Phase 6A seed",
+  "document": {
+    "fileName": "Ghid Vin-Divin Moldova (ro+en) 7 Print.pdf",
+    "title": "Ghidul Vinului / Wine Guide",
+    "year": 2023,
+    "language": [
+      "ro",
+      "en"
+    ],
+    "pages": 204,
+    "owner": "Wine.MD"
+  },
+  "generationPolicy": {
+    "positiveRequiresEvidence": true,
+    "positiveRequiresReferenceAnswer": true,
+    "negativeRequiresGlobalAbsenceCheck": true,
+    "allowDirectQuotes": false,
+    "maxQuestionsPerEvidenceChunk": 3
+  },
+  "items": [
+    {
+      "id": "pos-001",
+      "polarity": "positive",
+      "question": "Сколько виноградарских зон указано для Республики Молдова?",
+      "referenceAnswer": "В книге указано четыре виноградарские зоны.",
+      "category": "wine_regions",
+      "difficulty": 1,
+      "questionType": "fact",
+      "evidence": {
+        "documentId": "ghid-vin-2023",
+        "page": 14,
+        "section": "wine_regions",
+        "requiredTerms": []
+      },
+      "status": "approved"
+    },
+    {
+      "id": "pos-002",
+      "polarity": "positive",
+      "question": "Как в Молдове называются виноградарские регионы с защищённым географическим указанием?",
+      "referenceAnswer": "Они называются IGP — Indicație Geografică Protejată.",
+      "category": "wine_regions",
+      "difficulty": 1,
+      "questionType": "definition",
+      "evidence": {
+        "documentId": "ghid-vin-2023",
+        "page": 14,
+        "section": "wine_regions",
+        "requiredTerms": []
+      },
+      "status": "approved"
+    },
+    {
+      "id": "pos-003",
+      "polarity": "positive",
+      "question": "Какая виноградарская зона является самой крупной в Молдове?",
+      "referenceAnswer": "Самой крупной является зона Codru.",
+      "category": "wine_regions",
+      "difficulty": 1,
+      "questionType": "fact",
+      "evidence": {
+        "documentId": "ghid-vin-2023",
+        "page": 15,
+        "section": "wine_regions",
+        "requiredTerms": []
+      },
+      "status": "approved"
+    },
+    {
+      "id": "pos-004",
+      "polarity": "positive",
+      "question": "Какая доля всех виноградников страны находится в зоне Codru?",
+      "referenceAnswer": "В зоне Codru находится примерно половина всех виноградников страны.",
+      "category": "wine_regions",
+      "difficulty": 1,
+      "questionType": "fact",
+      "evidence": {
+        "documentId": "ghid-vin-2023",
+        "page": 15,
+        "section": "wine_regions",
+        "requiredTerms": []
+      },
+      "status": "approved"
+    },
+    {
+      "id": "pos-005",
+      "polarity": "positive",
+      "question": "Какие вина особенно известны в регионе Codru?",
+      "referenceAnswer": "Регион известен белыми и игристыми винами.",
+      "category": "wine_regions",
+      "difficulty": 1,
+      "questionType": "fact",
+      "evidence": {
+        "documentId": "ghid-vin-2023",
+        "page": 15,
+        "section": "wine_regions",
+        "requiredTerms": []
+      },
+      "status": "approved"
+    },
+    {
+      "id": "pos-006",
+      "polarity": "positive",
+      "question": "Какое легендарное вино происходит из зоны Ștefan Vodă?",
+      "referenceAnswer": "Из этой зоны происходит Negru de Purcari.",
+      "category": "wine_regions",
+      "difficulty": 1,
+      "questionType": "fact",
+      "evidence": {
+        "documentId": "ghid-vin-2023",
+        "page": 15,
+        "section": "wine_regions",
+        "requiredTerms": []
+      },
+      "status": "approved"
+    },
+    {
+      "id": "pos-007",
+      "polarity": "positive",
+      "question": "Какая виноградарская зона является самой южной?",
+      "referenceAnswer": "Самой южной является Valea lui Traian.",
+      "category": "wine_regions",
+      "difficulty": 1,
+      "questionType": "fact",
+      "evidence": {
+        "documentId": "ghid-vin-2023",
+        "page": 16,
+        "section": "wine_regions",
+        "requiredTerms": []
+      },
+      "status": "approved"
+    },
+    {
+      "id": "pos-008",
+      "polarity": "positive",
+      "question": "Какими винами особенно известна зона Valea lui Traian?",
+      "referenceAnswer": "Она известна выразительными плотными красными и ликёрными винами.",
+      "category": "wine_regions",
+      "difficulty": 2,
+      "questionType": "summary",
+      "evidence": {
+        "documentId": "ghid-vin-2023",
+        "page": 16,
+        "section": "wine_regions",
+        "requiredTerms": []
+      },
+      "status": "approved"
+    },
+    {
+      "id": "pos-009",
+      "polarity": "positive",
+      "question": "Каков минимальный срок выдержки молдавского дивина?",
+      "referenceAnswer": "Не менее трёх лет в дубовых бочках.",
+      "category": "divin",
+      "difficulty": 1,
+      "questionType": "fact",
+      "evidence": {
+        "documentId": "ghid-vin-2023",
+        "page": 16,
+        "section": "divin",
+        "requiredTerms": []
+      },
+      "status": "approved"
+    },
+    {
+      "id": "pos-010",
+      "polarity": "positive",
+      "question": "Какой минимальный срок выдержки у категории VSOP?",
+      "referenceAnswer": "Не менее пяти лет.",
+      "category": "divin",
+      "difficulty": 1,
+      "questionType": "fact",
+      "evidence": {
+        "documentId": "ghid-vin-2023",
+        "page": 16,
+        "section": "divin",
+        "requiredTerms": []
+      },
+      "status": "approved"
+    },
+    {
+      "id": "pos-011",
+      "polarity": "positive",
+      "question": "Какой минимальный срок выдержки у категории XO?",
+      "referenceAnswer": "Не менее семи лет.",
+      "category": "divin",
+      "difficulty": 1,
+      "questionType": "fact",
+      "evidence": {
+        "documentId": "ghid-vin-2023",
+        "page": 16,
+        "section": "divin",
+        "requiredTerms": []
+      },
+      "status": "approved"
+    },
+    {
+      "id": "pos-012",
+      "polarity": "positive",
+      "question": "Какой минимальный срок выдержки у категории XXO?",
+      "referenceAnswer": "Не менее двадцати лет.",
+      "category": "divin",
+      "difficulty": 1,
+      "questionType": "fact",
+      "evidence": {
+        "documentId": "ghid-vin-2023",
+        "page": 16,
+        "section": "divin",
+        "requiredTerms": []
+      },
+      "status": "approved"
+    },
+    {
+      "id": "pos-013",
+      "polarity": "positive",
+      "question": "Сколько лет насчитывает история сорта Fetească Neagră?",
+      "referenceAnswer": "Более двух тысяч лет.",
+      "category": "grape_varieties",
+      "difficulty": 1,
+      "questionType": "fact",
+      "evidence": {
+        "documentId": "ghid-vin-2023",
+        "page": 19,
+        "section": "grape_varieties",
+        "requiredTerms": []
+      },
+      "status": "approved"
+    },
+    {
+      "id": "pos-014",
+      "polarity": "positive",
+      "question": "Где, согласно книге, появился сорт Fetească Neagră?",
+      "referenceAnswer": "На берегах Прута, на юго-западе Молдовы.",
+      "category": "grape_varieties",
+      "difficulty": 1,
+      "questionType": "fact",
+      "evidence": {
+        "documentId": "ghid-vin-2023",
+        "page": 19,
+        "section": "grape_varieties",
+        "requiredTerms": []
+      },
+      "status": "approved"
+    },
+    {
+      "id": "pos-015",
+      "polarity": "positive",
+      "question": "Какие ароматы характерны для Fetească Neagră?",
+      "referenceAnswer": "Ежевика, слива, вишня, корица, чёрный перец и ваниль.",
+      "category": "grape_varieties",
+      "difficulty": 2,
+      "questionType": "list",
+      "evidence": {
+        "documentId": "ghid-vin-2023",
+        "page": 19,
+        "section": "grape_varieties",
+        "requiredTerms": []
+      },
+      "status": "approved"
+    },
+    {
+      "id": "pos-016",
+      "polarity": "positive",
+      "question": "Какой местный сорт занимает наибольшую площадь в Молдове?",
+      "referenceAnswer": "Fetească Albă.",
+      "category": "grape_varieties",
+      "difficulty": 1,
+      "questionType": "fact",
+      "evidence": {
+        "documentId": "ghid-vin-2023",
+        "page": 20,
+        "section": "grape_varieties",
+        "requiredTerms": []
+      },
+      "status": "approved"
+    },
+    {
+      "id": "pos-017",
+      "polarity": "positive",
+      "question": "Какие ароматы описаны у Fetească Albă?",
+      "referenceAnswer": "Молодая лоза, акация, полевые цветы, цитрусы и зелёное яблоко.",
+      "category": "grape_varieties",
+      "difficulty": 2,
+      "questionType": "list",
+      "evidence": {
+        "documentId": "ghid-vin-2023",
+        "page": 20,
+        "section": "grape_varieties",
+        "requiredTerms": []
+      },
+      "status": "approved"
+    },
+    {
+      "id": "pos-018",
+      "polarity": "positive",
+      "question": "Какие сорта стали родителями Fetească Regală?",
+      "referenceAnswer": "Fetească Albă и Grasă de Cotnari.",
+      "category": "grape_varieties",
+      "difficulty": 1,
+      "questionType": "fact",
+      "evidence": {
+        "documentId": "ghid-vin-2023",
+        "page": 20,
+        "section": "grape_varieties",
+        "requiredTerms": []
+      },
+      "status": "approved"
+    },
+    {
+      "id": "pos-019",
+      "polarity": "positive",
+      "question": "Какие основные ароматы характерны для Fetească Regală?",
+      "referenceAnswer": "Цветочные оттенки, груша и цитрусы.",
+      "category": "grape_varieties",
+      "difficulty": 1,
+      "questionType": "list",
+      "evidence": {
+        "documentId": "ghid-vin-2023",
+        "page": 20,
+        "section": "grape_varieties",
+        "requiredTerms": []
+      },
+      "status": "approved"
+    },
+    {
+      "id": "pos-020",
+      "polarity": "positive",
+      "question": "Где считается родиной сорта Rară Neagră?",
+      "referenceAnswer": "В микрозоне Purcari на берегах Днестра, на юго-востоке страны.",
+      "category": "grape_varieties",
+      "difficulty": 1,
+      "questionType": "fact",
+      "evidence": {
+        "documentId": "ghid-vin-2023",
+        "page": 21,
+        "section": "grape_varieties",
+        "requiredTerms": []
+      },
+      "status": "approved"
+    },
+    {
+      "id": "pos-021",
+      "polarity": "positive",
+      "question": "Почему Rară Neagră подходит для игристых и розовых вин?",
+      "referenceAnswer": "Благодаря высокой кислотности.",
+      "category": "grape_varieties",
+      "difficulty": 2,
+      "questionType": "reason",
+      "evidence": {
+        "documentId": "ghid-vin-2023",
+        "page": 21,
+        "section": "grape_varieties",
+        "requiredTerms": []
+      },
+      "status": "approved"
+    },
+    {
+      "id": "pos-022",
+      "polarity": "positive",
+      "question": "В каком году был получен сорт Viorica?",
+      "referenceAnswer": "В 1969 году.",
+      "category": "grape_varieties",
+      "difficulty": 1,
+      "questionType": "fact",
+      "evidence": {
+        "documentId": "ghid-vin-2023",
+        "page": 22,
+        "section": "grape_varieties",
+        "requiredTerms": []
+      },
+      "status": "approved"
+    },
+    {
+      "id": "pos-023",
+      "polarity": "positive",
+      "question": "Из каких сортов был получен Viorica?",
+      "referenceAnswer": "Из французского Zeibel и итальянского Aleatico.",
+      "category": "grape_varieties",
+      "difficulty": 1,
+      "questionType": "fact",
+      "evidence": {
+        "documentId": "ghid-vin-2023",
+        "page": 22,
+        "section": "grape_varieties",
+        "requiredTerms": []
+      },
+      "status": "approved"
+    },
+    {
+      "id": "pos-024",
+      "polarity": "positive",
+      "question": "Какие ароматы описаны у сорта Viorica?",
+      "referenceAnswer": "Мускат, жасмин, акация, мёд, абрикос, цитрусы, тимьян и базилик.",
+      "category": "grape_varieties",
+      "difficulty": 2,
+      "questionType": "list",
+      "evidence": {
+        "documentId": "ghid-vin-2023",
+        "page": 22,
+        "section": "grape_varieties",
+        "requiredTerms": []
+      },
+      "status": "approved"
+    },
+    {
+      "id": "pos-025",
+      "polarity": "positive",
+      "question": "Из каких сортов создан Codrinschi?",
+      "referenceAnswer": "Из Cabernet Sauvignon и Rară Neagră.",
+      "category": "grape_varieties",
+      "difficulty": 1,
+      "questionType": "fact",
+      "evidence": {
+        "documentId": "ghid-vin-2023",
+        "page": 23,
+        "section": "grape_varieties",
+        "requiredTerms": []
+      },
+      "status": "approved"
+    },
+    {
+      "id": "pos-026",
+      "polarity": "positive",
+      "question": "Какие сорта являются предшественниками Riton?",
+      "referenceAnswer": "Villard Blanc и Riesling de Rhein.",
+      "category": "grape_varieties",
+      "difficulty": 1,
+      "questionType": "fact",
+      "evidence": {
+        "documentId": "ghid-vin-2023",
+        "page": 23,
+        "section": "grape_varieties",
+        "requiredTerms": []
+      },
+      "status": "approved"
+    },
+    {
+      "id": "pos-027",
+      "polarity": "positive",
+      "question": "Для чего раньше преимущественно использовали Alb de Onițcani?",
+      "referenceAnswer": "Для производства дистиллятов.",
+      "category": "grape_varieties",
+      "difficulty": 1,
+      "questionType": "fact",
+      "evidence": {
+        "documentId": "ghid-vin-2023",
+        "page": 23,
+        "section": "grape_varieties",
+        "requiredTerms": []
+      },
+      "status": "approved"
+    },
+    {
+      "id": "pos-028",
+      "polarity": "positive",
+      "question": "Что в книге называется авторскими винами?",
+      "referenceAnswer": "Вина, производимые малыми партиями в небольших хозяйствах на высоком профессиональном уровне.",
+      "category": "authors_wines",
+      "difficulty": 2,
+      "questionType": "definition",
+      "evidence": {
+        "documentId": "ghid-vin-2023",
+        "page": 24,
+        "section": "authors_wines",
+        "requiredTerms": []
+      },
+      "status": "approved"
+    },
+    {
+      "id": "pos-029",
+      "polarity": "positive",
+      "question": "Сколько малых производителей насчитывалось в Молдове по данным книги?",
+      "referenceAnswer": "Более 60.",
+      "category": "authors_wines",
+      "difficulty": 1,
+      "questionType": "fact",
+      "evidence": {
+        "documentId": "ghid-vin-2023",
+        "page": 25,
+        "section": "authors_wines",
+        "requiredTerms": []
+      },
+      "status": "approved"
+    },
+    {
+      "id": "pos-030",
+      "polarity": "positive",
+      "question": "Кому принадлежат авторские права на книгу?",
+      "referenceAnswer": "Wine.MD.",
+      "category": "book_metadata",
+      "difficulty": 1,
+      "questionType": "fact",
+      "evidence": {
+        "documentId": "ghid-vin-2023",
+        "page": 2,
+        "section": "book_metadata",
+        "requiredTerms": []
+      },
+      "status": "approved"
+    },
+    {
+      "id": "pos-031",
+      "polarity": "positive",
+      "question": "Кто указан авторами книги?",
+      "referenceAnswer": "Snejana Muntean и Ivan Muntean.",
+      "category": "book_metadata",
+      "difficulty": 1,
+      "questionType": "fact",
+      "evidence": {
+        "documentId": "ghid-vin-2023",
+        "page": 2,
+        "section": "book_metadata",
+        "requiredTerms": []
+      },
+      "status": "approved"
+    },
+    {
+      "id": "pos-032",
+      "polarity": "positive",
+      "question": "В каком году издан путеводитель?",
+      "referenceAnswer": "В 2023 году.",
+      "category": "book_metadata",
+      "difficulty": 1,
+      "questionType": "fact",
+      "evidence": {
+        "documentId": "ghid-vin-2023",
+        "page": 1,
+        "section": "book_metadata",
+        "requiredTerms": []
+      },
+      "status": "approved"
+    },
+    {
+      "id": "pos-033",
+      "polarity": "positive",
+      "question": "Как называется YouTube-канал проекта «7000 de ani sub vin»?",
+      "referenceAnswer": "Winestory.",
+      "category": "project_7000",
+      "difficulty": 1,
+      "questionType": "fact",
+      "evidence": {
+        "documentId": "ghid-vin-2023",
+        "page": 26,
+        "section": "project_7000",
+        "requiredTerms": []
+      },
+      "status": "approved"
+    },
+    {
+      "id": "pos-034",
+      "polarity": "positive",
+      "question": "Какие исследования предусмотрены проектом «7000 de ani sub vin»?",
+      "referenceAnswer": "Археологические, генетические, химико-биологические, аналитические и палеоботанические исследования.",
+      "category": "project_7000",
+      "difficulty": 2,
+      "questionType": "list",
+      "evidence": {
+        "documentId": "ghid-vin-2023",
+        "page": 27,
+        "section": "project_7000",
+        "requiredTerms": []
+      },
+      "status": "approved"
+    },
+    {
+      "id": "pos-035",
+      "polarity": "positive",
+      "question": "Какова основная идея будущего Музея вина в проекте?",
+      "referenceAnswer": "Вино должно стать центральным персонажем экспозиции.",
+      "category": "project_7000",
+      "difficulty": 2,
+      "questionType": "summary",
+      "evidence": {
+        "documentId": "ghid-vin-2023",
+        "page": 27,
+        "section": "project_7000",
+        "requiredTerms": []
+      },
+      "status": "approved"
+    },
+    {
+      "id": "pos-036",
+      "polarity": "positive",
+      "question": "Где находится Agrici Wine?",
+      "referenceAnswer": "В селе Mileștii Mici.",
+      "category": "wineries",
+      "difficulty": 1,
+      "questionType": "fact",
+      "evidence": {
+        "documentId": "ghid-vin-2023",
+        "page": 30,
+        "section": "wineries",
+        "requiredTerms": []
+      },
+      "status": "approved"
+    },
+    {
+      "id": "pos-037",
+      "polarity": "positive",
+      "question": "Какие сорта выращивает Agrici Wine?",
+      "referenceAnswer": "Cabernet Sauvignon, Fetească Neagră, Merlot, Rară Neagră, Saperavi, Chardonnay, Aligote, Muscat и Rkatsiteli.",
+      "category": "wineries",
+      "difficulty": 2,
+      "questionType": "list",
+      "evidence": {
+        "documentId": "ghid-vin-2023",
+        "page": 30,
+        "section": "wineries",
+        "requiredTerms": []
+      },
+      "status": "approved"
+    },
+    {
+      "id": "pos-038",
+      "polarity": "positive",
+      "question": "В каком году основана Alianța-Vin?",
+      "referenceAnswer": "В 1994 году.",
+      "category": "wineries",
+      "difficulty": 1,
+      "questionType": "fact",
+      "evidence": {
+        "documentId": "ghid-vin-2023",
+        "page": 31,
+        "section": "wineries",
+        "requiredTerms": []
+      },
+      "status": "approved"
+    },
+    {
+      "id": "pos-039",
+      "polarity": "positive",
+      "question": "Какая молдавская компания первой стала разливать тихие вина, глинтвейн и коктейли в алюминиевые банки?",
+      "referenceAnswer": "Apriori Wine.",
+      "category": "wineries",
+      "difficulty": 2,
+      "questionType": "fact",
+      "evidence": {
+        "documentId": "ghid-vin-2023",
+        "page": 33,
+        "section": "wineries",
+        "requiredTerms": []
+      },
+      "status": "approved"
+    },
+    {
+      "id": "pos-040",
+      "polarity": "positive",
+      "question": "Кто является виноделом ATU Winery?",
+      "referenceAnswer": "Victor Vutcărău.",
+      "category": "wineries",
+      "difficulty": 1,
+      "questionType": "fact",
+      "evidence": {
+        "documentId": "ghid-vin-2023",
+        "page": 35,
+        "section": "wineries",
+        "requiredTerms": []
+      },
+      "status": "approved"
+    },
+    {
+      "id": "pos-041",
+      "polarity": "positive",
+      "question": "Какой местный сорт возродила ATU Winery?",
+      "referenceAnswer": "Codrinschi.",
+      "category": "wineries",
+      "difficulty": 1,
+      "questionType": "fact",
+      "evidence": {
+        "documentId": "ghid-vin-2023",
+        "page": 35,
+        "section": "wineries",
+        "requiredTerms": []
+      },
+      "status": "approved"
+    },
+    {
+      "id": "pos-042",
+      "polarity": "positive",
+      "question": "Сколько бутылок в среднем выпускаются отдельные серии ATU Winery?",
+      "referenceAnswer": "Примерно от 1 000 до 3 000 бутылок.",
+      "category": "wineries",
+      "difficulty": 1,
+      "questionType": "fact",
+      "evidence": {
+        "documentId": "ghid-vin-2023",
+        "page": 35,
+        "section": "wineries",
+        "requiredTerms": []
+      },
+      "status": "approved"
+    },
+    {
+      "id": "pos-043",
+      "polarity": "positive",
+      "question": "Сколько гектаров виноградников у Aurelius Winery?",
+      "referenceAnswer": "10 гектаров.",
+      "category": "wineries",
+      "difficulty": 1,
+      "questionType": "fact",
+      "evidence": {
+        "documentId": "ghid-vin-2023",
+        "page": 38,
+        "section": "wineries",
+        "requiredTerms": []
+      },
+      "status": "approved"
+    },
+    {
+      "id": "pos-044",
+      "polarity": "positive",
+      "question": "Кто является виноделом Aurelius Winery?",
+      "referenceAnswer": "Aurel Morar.",
+      "category": "wineries",
+      "difficulty": 1,
+      "questionType": "fact",
+      "evidence": {
+        "documentId": "ghid-vin-2023",
+        "page": 38,
+        "section": "wineries",
+        "requiredTerms": []
+      },
+      "status": "approved"
+    },
+    {
+      "id": "pos-045",
+      "polarity": "positive",
+      "question": "В каких бочках выдерживаются вина Aurelius Winery?",
+      "referenceAnswer": "Во французских дубовых бочках.",
+      "category": "wineries",
+      "difficulty": 1,
+      "questionType": "fact",
+      "evidence": {
+        "documentId": "ghid-vin-2023",
+        "page": 38,
+        "section": "wineries",
+        "requiredTerms": []
+      },
+      "status": "approved"
+    },
+    {
+      "id": "pos-046",
+      "polarity": "positive",
+      "question": "Какой винный комплекс назван первым château в Молдове?",
+      "referenceAnswer": "Castel Mimi.",
+      "category": "wineries",
+      "difficulty": 1,
+      "questionType": "fact",
+      "evidence": {
+        "documentId": "ghid-vin-2023",
+        "page": 43,
+        "section": "wineries",
+        "requiredTerms": []
+      },
+      "status": "approved"
+    },
+    {
+      "id": "pos-047",
+      "polarity": "positive",
+      "question": "Кто основал Castel Mimi?",
+      "referenceAnswer": "Constantin Mimi.",
+      "category": "wineries",
+      "difficulty": 1,
+      "questionType": "fact",
+      "evidence": {
+        "documentId": "ghid-vin-2023",
+        "page": 43,
+        "section": "wineries",
+        "requiredTerms": []
+      },
+      "status": "approved"
+    },
+    {
+      "id": "pos-048",
+      "polarity": "positive",
+      "question": "Какой производитель располагает собственной полосой для малых самолётов?",
+      "referenceAnswer": "Et Cetera.",
+      "category": "wineries",
+      "difficulty": 1,
+      "questionType": "fact",
+      "evidence": {
+        "documentId": "ghid-vin-2023",
+        "page": 63,
+        "section": "wineries",
+        "requiredTerms": []
+      },
+      "status": "approved"
+    },
+    {
+      "id": "pos-049",
+      "polarity": "positive",
+      "question": "Какая винодельня занесена в Книгу рекордов Гиннесса за крупнейшую коллекцию вин?",
+      "referenceAnswer": "Mileștii Mici.",
+      "category": "wineries",
+      "difficulty": 1,
+      "questionType": "fact",
+      "evidence": {
+        "documentId": "ghid-vin-2023",
+        "page": 79,
+        "section": "wineries",
+        "requiredTerms": []
+      },
+      "status": "approved"
+    },
+    {
+      "id": "pos-050",
+      "polarity": "positive",
+      "question": "Какой объём коллекции Mileștii Mici указан в книге?",
+      "referenceAnswer": "Около 1,5 миллиона бутылок.",
+      "category": "wineries",
+      "difficulty": 1,
+      "questionType": "fact",
+      "evidence": {
+        "documentId": "ghid-vin-2023",
+        "page": 79,
+        "section": "wineries",
+        "requiredTerms": []
+      },
+      "status": "approved"
+    },
+    {
+      "id": "neg-001",
+      "polarity": "negative",
+      "question": "Какой точный уровень pH у Fetească Neagră урожая 2023 года?",
+      "referenceAnswer": null,
+      "expectedBehavior": "refuse_no_evidence",
+      "category": "knowledge_boundary",
+      "difficulty": 2,
+      "questionType": "absence",
+      "absenceCheck": {
+        "scope": "entire_document",
+        "status": "requires_runtime_verification"
+      },
+      "status": "candidate"
+    },
+    {
+      "id": "neg-002",
+      "polarity": "negative",
+      "question": "Сколько граммов остаточного сахара в стандартном вине Fetească Albă?",
+      "referenceAnswer": null,
+      "expectedBehavior": "refuse_no_evidence",
+      "category": "knowledge_boundary",
+      "difficulty": 2,
+      "questionType": "absence",
+      "absenceCheck": {
+        "scope": "entire_document",
+        "status": "requires_runtime_verification"
+      },
+      "status": "candidate"
+    },
+    {
+      "id": "neg-003",
+      "polarity": "negative",
+      "question": "Какова калорийность 100 мл вина из сорта Rară Neagră?",
+      "referenceAnswer": null,
+      "expectedBehavior": "refuse_no_evidence",
+      "category": "knowledge_boundary",
+      "difficulty": 2,
+      "questionType": "absence",
+      "absenceCheck": {
+        "scope": "entire_document",
+        "status": "requires_runtime_verification"
+      },
+      "status": "candidate"
+    },
+    {
+      "id": "neg-004",
+      "polarity": "negative",
+      "question": "Какова розничная цена бутылки Aurelius в июле 2026 года?",
+      "referenceAnswer": null,
+      "expectedBehavior": "refuse_no_evidence",
+      "category": "knowledge_boundary",
+      "difficulty": 2,
+      "questionType": "absence",
+      "absenceCheck": {
+        "scope": "entire_document",
+        "status": "requires_runtime_verification"
+      },
+      "status": "candidate"
+    },
+    {
+      "id": "neg-005",
+      "polarity": "negative",
+      "question": "Есть ли у Aurelius Winery доставка в тот же день по Кишинёву?",
+      "referenceAnswer": null,
+      "expectedBehavior": "refuse_no_evidence",
+      "category": "knowledge_boundary",
+      "difficulty": 2,
+      "questionType": "absence",
+      "absenceCheck": {
+        "scope": "entire_document",
+        "status": "requires_runtime_verification"
+      },
+      "status": "candidate"
+    },
+    {
+      "id": "neg-006",
+      "polarity": "negative",
+      "question": "Каков график работы дегустационного зала Aurelius Winery по воскресеньям?",
+      "referenceAnswer": null,
+      "expectedBehavior": "refuse_no_evidence",
+      "category": "knowledge_boundary",
+      "difficulty": 2,
+      "questionType": "absence",
+      "absenceCheck": {
+        "scope": "entire_document",
+        "status": "requires_runtime_verification"
+      },
+      "status": "candidate"
+    },
+    {
+      "id": "neg-007",
+      "polarity": "negative",
+      "question": "Какой номер партии указан на бутылке Aurelius Glera Brut 2023?",
+      "referenceAnswer": null,
+      "expectedBehavior": "refuse_no_evidence",
+      "category": "knowledge_boundary",
+      "difficulty": 2,
+      "questionType": "absence",
+      "absenceCheck": {
+        "scope": "entire_document",
+        "status": "requires_runtime_verification"
+      },
+      "status": "candidate"
+    },
+    {
+      "id": "neg-008",
+      "polarity": "negative",
+      "question": "Какой рейтинг Wine Advocate получил Aurelius Cabernet Sauvignon?",
+      "referenceAnswer": null,
+      "expectedBehavior": "refuse_no_evidence",
+      "category": "knowledge_boundary",
+      "difficulty": 2,
+      "questionType": "absence",
+      "absenceCheck": {
+        "scope": "entire_document",
+        "status": "requires_runtime_verification"
+      },
+      "status": "candidate"
+    },
+    {
+      "id": "neg-009",
+      "polarity": "negative",
+      "question": "Какая температура ферментации используется для Viorica на конкретной винодельне?",
+      "referenceAnswer": null,
+      "expectedBehavior": "refuse_no_evidence",
+      "category": "knowledge_boundary",
+      "difficulty": 2,
+      "questionType": "absence",
+      "absenceCheck": {
+        "scope": "entire_document",
+        "status": "requires_runtime_verification"
+      },
+      "status": "candidate"
+    },
+    {
+      "id": "neg-010",
+      "polarity": "negative",
+      "question": "Какие дрожжи применяет ATU Winery для Codrinschi?",
+      "referenceAnswer": null,
+      "expectedBehavior": "refuse_no_evidence",
+      "category": "knowledge_boundary",
+      "difficulty": 2,
+      "questionType": "absence",
+      "absenceCheck": {
+        "scope": "entire_document",
+        "status": "requires_runtime_verification"
+      },
+      "status": "candidate"
+    },
+    {
+      "id": "neg-011",
+      "polarity": "negative",
+      "question": "Какой точный уровень свободного SO2 в вине Pelican Negru?",
+      "referenceAnswer": null,
+      "expectedBehavior": "refuse_no_evidence",
+      "category": "knowledge_boundary",
+      "difficulty": 2,
+      "questionType": "absence",
+      "absenceCheck": {
+        "scope": "entire_document",
+        "status": "requires_runtime_verification"
+      },
+      "status": "candidate"
+    },
+    {
+      "id": "neg-012",
+      "polarity": "negative",
+      "question": "Сколько калорий содержится в бокале Negru de Purcari?",
+      "referenceAnswer": null,
+      "expectedBehavior": "refuse_no_evidence",
+      "category": "knowledge_boundary",
+      "difficulty": 2,
+      "questionType": "absence",
+      "absenceCheck": {
+        "scope": "entire_document",
+        "status": "requires_runtime_verification"
+      },
+      "status": "candidate"
+    },
+    {
+      "id": "neg-013",
+      "polarity": "negative",
+      "question": "Какая текущая цена экскурсии в Cricova для группы из четырёх человек?",
+      "referenceAnswer": null,
+      "expectedBehavior": "refuse_no_evidence",
+      "category": "knowledge_boundary",
+      "difficulty": 2,
+      "questionType": "absence",
+      "absenceCheck": {
+        "scope": "entire_document",
+        "status": "requires_runtime_verification"
+      },
+      "status": "candidate"
+    },
+    {
+      "id": "neg-014",
+      "polarity": "negative",
+      "question": "Есть ли свободные номера в отеле Castel Mimi на следующие выходные?",
+      "referenceAnswer": null,
+      "expectedBehavior": "refuse_no_evidence",
+      "category": "knowledge_boundary",
+      "difficulty": 2,
+      "questionType": "absence",
+      "absenceCheck": {
+        "scope": "entire_document",
+        "status": "requires_runtime_verification"
+      },
+      "status": "candidate"
+    },
+    {
+      "id": "neg-015",
+      "polarity": "negative",
+      "question": "Какой пароль Wi‑Fi используется в ресторане Château Vartely?",
+      "referenceAnswer": null,
+      "expectedBehavior": "refuse_no_evidence",
+      "category": "knowledge_boundary",
+      "difficulty": 2,
+      "questionType": "absence",
+      "absenceCheck": {
+        "scope": "entire_document",
+        "status": "requires_runtime_verification"
+      },
+      "status": "candidate"
+    },
+    {
+      "id": "neg-016",
+      "polarity": "negative",
+      "question": "Каковы GPS-координаты каждого виноградника Agrici Wine?",
+      "referenceAnswer": null,
+      "expectedBehavior": "refuse_no_evidence",
+      "category": "knowledge_boundary",
+      "difficulty": 2,
+      "questionType": "absence",
+      "absenceCheck": {
+        "scope": "entire_document",
+        "status": "requires_runtime_verification"
+      },
+      "status": "candidate"
+    },
+    {
+      "id": "neg-017",
+      "polarity": "negative",
+      "question": "Какой урожайности в тоннах с гектара достигла Bahu Winery в 2022 году?",
+      "referenceAnswer": null,
+      "expectedBehavior": "refuse_no_evidence",
+      "category": "knowledge_boundary",
+      "difficulty": 2,
+      "questionType": "absence",
+      "absenceCheck": {
+        "scope": "entire_document",
+        "status": "requires_runtime_verification"
+      },
+      "status": "candidate"
+    },
+    {
+      "id": "neg-018",
+      "polarity": "negative",
+      "question": "Какой точный состав почвы по каждому участку Aurelius Winery?",
+      "referenceAnswer": null,
+      "expectedBehavior": "refuse_no_evidence",
+      "category": "knowledge_boundary",
+      "difficulty": 2,
+      "questionType": "absence",
+      "absenceCheck": {
+        "scope": "entire_document",
+        "status": "requires_runtime_verification"
+      },
+      "status": "candidate"
+    },
+    {
+      "id": "neg-019",
+      "polarity": "negative",
+      "question": "Какой процент новых французских бочек использует Aurelius Winery?",
+      "referenceAnswer": null,
+      "expectedBehavior": "refuse_no_evidence",
+      "category": "knowledge_boundary",
+      "difficulty": 2,
+      "questionType": "absence",
+      "absenceCheck": {
+        "scope": "entire_document",
+        "status": "requires_runtime_verification"
+      },
+      "status": "candidate"
+    },
+    {
+      "id": "neg-020",
+      "polarity": "negative",
+      "question": "Какой срок мацерации применяется для Fetească Neagră у Gogu Winery?",
+      "referenceAnswer": null,
+      "expectedBehavior": "refuse_no_evidence",
+      "category": "knowledge_boundary",
+      "difficulty": 2,
+      "questionType": "absence",
+      "absenceCheck": {
+        "scope": "entire_document",
+        "status": "requires_runtime_verification"
+      },
+      "status": "candidate"
+    },
+    {
+      "id": "neg-021",
+      "polarity": "negative",
+      "question": "Какая дата розлива указана на партии Rară Neagră от Domeniile Pripa?",
+      "referenceAnswer": null,
+      "expectedBehavior": "refuse_no_evidence",
+      "category": "knowledge_boundary",
+      "difficulty": 2,
+      "questionType": "absence",
+      "absenceCheck": {
+        "scope": "entire_document",
+        "status": "requires_runtime_verification"
+      },
+      "status": "candidate"
+    },
+    {
+      "id": "neg-022",
+      "polarity": "negative",
+      "question": "Сколько бутылок конкретного вина осталось на складе Wine.md?",
+      "referenceAnswer": null,
+      "expectedBehavior": "refuse_no_evidence",
+      "category": "knowledge_boundary",
+      "difficulty": 2,
+      "questionType": "absence",
+      "absenceCheck": {
+        "scope": "entire_document",
+        "status": "requires_runtime_verification"
+      },
+      "status": "candidate"
+    },
+    {
+      "id": "neg-023",
+      "polarity": "negative",
+      "question": "Какой штрихкод у бутылки ATU Viorica?",
+      "referenceAnswer": null,
+      "expectedBehavior": "refuse_no_evidence",
+      "category": "knowledge_boundary",
+      "difficulty": 2,
+      "questionType": "absence",
+      "absenceCheck": {
+        "scope": "entire_document",
+        "status": "requires_runtime_verification"
+      },
+      "status": "candidate"
+    },
+    {
+      "id": "neg-024",
+      "polarity": "negative",
+      "question": "Какой диаметр бутылки используют для игристого Apriori Wine?",
+      "referenceAnswer": null,
+      "expectedBehavior": "refuse_no_evidence",
+      "category": "knowledge_boundary",
+      "difficulty": 2,
+      "questionType": "absence",
+      "absenceCheck": {
+        "scope": "entire_document",
+        "status": "requires_runtime_verification"
+      },
+      "status": "candidate"
+    },
+    {
+      "id": "neg-025",
+      "polarity": "negative",
+      "question": "Какой размер пробки применяет Cricova для серии Prestige?",
+      "referenceAnswer": null,
+      "expectedBehavior": "refuse_no_evidence",
+      "category": "knowledge_boundary",
+      "difficulty": 2,
+      "questionType": "absence",
+      "absenceCheck": {
+        "scope": "entire_document",
+        "status": "requires_runtime_verification"
+      },
+      "status": "candidate"
+    },
+    {
+      "id": "neg-026",
+      "polarity": "negative",
+      "question": "Какая температура хранения поддерживается в каждом тоннеле Mileștii Mici?",
+      "referenceAnswer": null,
+      "expectedBehavior": "refuse_no_evidence",
+      "category": "knowledge_boundary",
+      "difficulty": 2,
+      "questionType": "absence",
+      "absenceCheck": {
+        "scope": "entire_document",
+        "status": "requires_runtime_verification"
+      },
+      "status": "candidate"
+    },
+    {
+      "id": "neg-027",
+      "polarity": "negative",
+      "question": "Какой ежемесячный оборот магазина Wine.md?",
+      "referenceAnswer": null,
+      "expectedBehavior": "refuse_no_evidence",
+      "category": "knowledge_boundary",
+      "difficulty": 2,
+      "questionType": "absence",
+      "absenceCheck": {
+        "scope": "entire_document",
+        "status": "requires_runtime_verification"
+      },
+      "status": "candidate"
+    },
+    {
+      "id": "neg-028",
+      "polarity": "negative",
+      "question": "Какова себестоимость производства бутылки Fetească Regală?",
+      "referenceAnswer": null,
+      "expectedBehavior": "refuse_no_evidence",
+      "category": "knowledge_boundary",
+      "difficulty": 2,
+      "questionType": "absence",
+      "absenceCheck": {
+        "scope": "entire_document",
+        "status": "requires_runtime_verification"
+      },
+      "status": "candidate"
+    },
+    {
+      "id": "neg-029",
+      "polarity": "negative",
+      "question": "Какой размер заработной платы у винодела Aurelius Winery?",
+      "referenceAnswer": null,
+      "expectedBehavior": "refuse_no_evidence",
+      "category": "knowledge_boundary",
+      "difficulty": 2,
+      "questionType": "absence",
+      "absenceCheck": {
+        "scope": "entire_document",
+        "status": "requires_runtime_verification"
+      },
+      "status": "candidate"
+    },
+    {
+      "id": "neg-030",
+      "polarity": "negative",
+      "question": "Сколько сотрудников работает в Castel Mimi в 2026 году?",
+      "referenceAnswer": null,
+      "expectedBehavior": "refuse_no_evidence",
+      "category": "knowledge_boundary",
+      "difficulty": 2,
+      "questionType": "absence",
+      "absenceCheck": {
+        "scope": "entire_document",
+        "status": "requires_runtime_verification"
+      },
+      "status": "candidate"
+    },
+    {
+      "id": "neg-031",
+      "polarity": "negative",
+      "question": "Какая маржа ресторана Château Vartely?",
+      "referenceAnswer": null,
+      "expectedBehavior": "refuse_no_evidence",
+      "category": "knowledge_boundary",
+      "difficulty": 2,
+      "questionType": "absence",
+      "absenceCheck": {
+        "scope": "entire_document",
+        "status": "requires_runtime_verification"
+      },
+      "status": "candidate"
+    },
+    {
+      "id": "neg-032",
+      "polarity": "negative",
+      "question": "Какие аллергены содержатся в меню ресторана Asconi Winery?",
+      "referenceAnswer": null,
+      "expectedBehavior": "refuse_no_evidence",
+      "category": "knowledge_boundary",
+      "difficulty": 2,
+      "questionType": "absence",
+      "absenceCheck": {
+        "scope": "entire_document",
+        "status": "requires_runtime_verification"
+      },
+      "status": "candidate"
+    },
+    {
+      "id": "neg-033",
+      "polarity": "negative",
+      "question": "Есть ли безглютеновое меню в Et Cetera?",
+      "referenceAnswer": null,
+      "expectedBehavior": "refuse_no_evidence",
+      "category": "knowledge_boundary",
+      "difficulty": 2,
+      "questionType": "absence",
+      "absenceCheck": {
+        "scope": "entire_document",
+        "status": "requires_runtime_verification"
+      },
+      "status": "candidate"
+    },
+    {
+      "id": "neg-034",
+      "polarity": "negative",
+      "question": "Какой автобус сегодня едет из Кишинёва в Purcari?",
+      "referenceAnswer": null,
+      "expectedBehavior": "refuse_no_evidence",
+      "category": "knowledge_boundary",
+      "difficulty": 2,
+      "questionType": "absence",
+      "absenceCheck": {
+        "scope": "entire_document",
+        "status": "requires_runtime_verification"
+      },
+      "status": "candidate"
+    },
+    {
+      "id": "neg-035",
+      "polarity": "negative",
+      "question": "Сколько времени займёт поездка до Cricova с учётом текущих пробок?",
+      "referenceAnswer": null,
+      "expectedBehavior": "refuse_no_evidence",
+      "category": "knowledge_boundary",
+      "difficulty": 2,
+      "questionType": "absence",
+      "absenceCheck": {
+        "scope": "entire_document",
+        "status": "requires_runtime_verification"
+      },
+      "status": "candidate"
+    },
+    {
+      "id": "neg-036",
+      "polarity": "negative",
+      "question": "Какая погода будет в Ștefan Vodă завтра?",
+      "referenceAnswer": null,
+      "expectedBehavior": "refuse_no_evidence",
+      "category": "knowledge_boundary",
+      "difficulty": 2,
+      "questionType": "absence",
+      "absenceCheck": {
+        "scope": "entire_document",
+        "status": "requires_runtime_verification"
+      },
+      "status": "candidate"
+    },
+    {
+      "id": "neg-037",
+      "polarity": "negative",
+      "question": "Какой курс евро действует в магазине Wine.md сегодня?",
+      "referenceAnswer": null,
+      "expectedBehavior": "refuse_no_evidence",
+      "category": "knowledge_boundary",
+      "difficulty": 2,
+      "questionType": "absence",
+      "absenceCheck": {
+        "scope": "entire_document",
+        "status": "requires_runtime_verification"
+      },
+      "status": "candidate"
+    },
+    {
+      "id": "neg-038",
+      "polarity": "negative",
+      "question": "Какой текущий остаток Alb de Onițcani в продаже?",
+      "referenceAnswer": null,
+      "expectedBehavior": "refuse_no_evidence",
+      "category": "knowledge_boundary",
+      "difficulty": 2,
+      "questionType": "absence",
+      "absenceCheck": {
+        "scope": "entire_document",
+        "status": "requires_runtime_verification"
+      },
+      "status": "candidate"
+    },
+    {
+      "id": "neg-039",
+      "polarity": "negative",
+      "question": "Можно ли оплатить экскурсию в Mileștii Mici криптовалютой?",
+      "referenceAnswer": null,
+      "expectedBehavior": "refuse_no_evidence",
+      "category": "knowledge_boundary",
+      "difficulty": 2,
+      "questionType": "absence",
+      "absenceCheck": {
+        "scope": "entire_document",
+        "status": "requires_runtime_verification"
+      },
+      "status": "candidate"
+    },
+    {
+      "id": "neg-040",
+      "polarity": "negative",
+      "question": "Есть ли зарядка для электромобилей у Bahu Winery?",
+      "referenceAnswer": null,
+      "expectedBehavior": "refuse_no_evidence",
+      "category": "knowledge_boundary",
+      "difficulty": 2,
+      "questionType": "absence",
+      "absenceCheck": {
+        "scope": "entire_document",
+        "status": "requires_runtime_verification"
+      },
+      "status": "candidate"
+    },
+    {
+      "id": "neg-041",
+      "polarity": "negative",
+      "question": "Какой уровень шума в гостинице Castel Mimi ночью?",
+      "referenceAnswer": null,
+      "expectedBehavior": "refuse_no_evidence",
+      "category": "knowledge_boundary",
+      "difficulty": 2,
+      "questionType": "absence",
+      "absenceCheck": {
+        "scope": "entire_document",
+        "status": "requires_runtime_verification"
+      },
+      "status": "candidate"
+    },
+    {
+      "id": "neg-042",
+      "polarity": "negative",
+      "question": "Какой номер телефона у личного ассистента винодела Aurel Morar?",
+      "referenceAnswer": null,
+      "expectedBehavior": "refuse_no_evidence",
+      "category": "knowledge_boundary",
+      "difficulty": 2,
+      "questionType": "absence",
+      "absenceCheck": {
+        "scope": "entire_document",
+        "status": "requires_runtime_verification"
+      },
+      "status": "candidate"
+    },
+    {
+      "id": "neg-043",
+      "polarity": "negative",
+      "question": "Какая дата следующего закрытого мероприятия в Cricova?",
+      "referenceAnswer": null,
+      "expectedBehavior": "refuse_no_evidence",
+      "category": "knowledge_boundary",
+      "difficulty": 2,
+      "questionType": "absence",
+      "absenceCheck": {
+        "scope": "entire_document",
+        "status": "requires_runtime_verification"
+      },
+      "status": "candidate"
+    },
+    {
+      "id": "neg-044",
+      "polarity": "negative",
+      "question": "Какие скидки действуют для студентов в Château Purcari?",
+      "referenceAnswer": null,
+      "expectedBehavior": "refuse_no_evidence",
+      "category": "knowledge_boundary",
+      "difficulty": 2,
+      "questionType": "absence",
+      "absenceCheck": {
+        "scope": "entire_document",
+        "status": "requires_runtime_verification"
+      },
+      "status": "candidate"
+    },
+    {
+      "id": "neg-045",
+      "polarity": "negative",
+      "question": "Какой точный возраст каждой лозы на участке Fautor Winery?",
+      "referenceAnswer": null,
+      "expectedBehavior": "refuse_no_evidence",
+      "category": "knowledge_boundary",
+      "difficulty": 2,
+      "questionType": "absence",
+      "absenceCheck": {
+        "scope": "entire_document",
+        "status": "requires_runtime_verification"
+      },
+      "status": "candidate"
+    },
+    {
+      "id": "neg-046",
+      "polarity": "negative",
+      "question": "Какова влажность в погребе Agrici Wine сегодня?",
+      "referenceAnswer": null,
+      "expectedBehavior": "refuse_no_evidence",
+      "category": "knowledge_boundary",
+      "difficulty": 2,
+      "questionType": "absence",
+      "absenceCheck": {
+        "scope": "entire_document",
+        "status": "requires_runtime_verification"
+      },
+      "status": "candidate"
+    },
+    {
+      "id": "neg-047",
+      "polarity": "negative",
+      "question": "Какая система орошения используется на каждой делянке Rădăcini?",
+      "referenceAnswer": null,
+      "expectedBehavior": "refuse_no_evidence",
+      "category": "knowledge_boundary",
+      "difficulty": 2,
+      "questionType": "absence",
+      "absenceCheck": {
+        "scope": "entire_document",
+        "status": "requires_runtime_verification"
+      },
+      "status": "candidate"
+    },
+    {
+      "id": "neg-048",
+      "polarity": "negative",
+      "question": "Какой процент органического винограда сертифицирован у каждой винодельни?",
+      "referenceAnswer": null,
+      "expectedBehavior": "refuse_no_evidence",
+      "category": "knowledge_boundary",
+      "difficulty": 2,
+      "questionType": "absence",
+      "absenceCheck": {
+        "scope": "entire_document",
+        "status": "requires_runtime_verification"
+      },
+      "status": "candidate"
+    },
+    {
+      "id": "neg-049",
+      "polarity": "negative",
+      "question": "Какая страховая компания обслуживает Castel Mimi?",
+      "referenceAnswer": null,
+      "expectedBehavior": "refuse_no_evidence",
+      "category": "knowledge_boundary",
+      "difficulty": 2,
+      "questionType": "absence",
+      "absenceCheck": {
+        "scope": "entire_document",
+        "status": "requires_runtime_verification"
+      },
+      "status": "candidate"
+    },
+    {
+      "id": "neg-050",
+      "polarity": "negative",
+      "question": "Какой прогноз продаж Viorica на 2027 год?",
+      "referenceAnswer": null,
+      "expectedBehavior": "refuse_no_evidence",
+      "category": "knowledge_boundary",
+      "difficulty": 2,
+      "questionType": "absence",
+      "absenceCheck": {
+        "scope": "entire_document",
+        "status": "requires_runtime_verification"
+      },
+      "status": "candidate"
+    }
+  ]
+}

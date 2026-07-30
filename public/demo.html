@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="WINE AI — the digital sommelier for Moldovan wine.">
+  <title>WINE AI — Digital Sommelier of Moldova</title>
+  <style>
+    :root {
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: #f8ead6;
+      background: #12080b;
+      --wine: #6f1628;
+      --wine-light: #a94352;
+      --gold: #d7ad68;
+      --cream: #f8ead6;
+      --muted: #c9b6a2;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; min-height: 100vh; background: #12080b; }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -3;
+      background:
+        linear-gradient(90deg, rgba(13, 5, 8, .94) 0%, rgba(18, 7, 10, .75) 45%, rgba(18, 7, 10, .38) 100%),
+        url('/widget/wine-ai-background.png') center / cover no-repeat;
+      transform: scale(1.03);
+    }
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 74% 30%, rgba(184, 89, 67, .18), transparent 34%),
+        linear-gradient(180deg, transparent 55%, rgba(10, 4, 7, .82));
+    }
+    a { color: inherit; text-decoration: none; }
+    .site-header {
+      width: min(1240px, calc(100% - 48px));
+      margin: 0 auto;
+      padding: 26px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      border-bottom: 1px solid rgba(215, 173, 104, .2);
+    }
+    .brand { display: flex; align-items: center; gap: 12px; font-weight: 800; letter-spacing: .13em; }
+    .brand-mark { width: 34px; height: 34px; border: 1px solid rgba(215,173,104,.75); border-radius: 50%; display: grid; place-items: center; color: var(--gold); font-family: Georgia, serif; }
+    .nav { display: flex; gap: 28px; color: #e0cdb8; font-size: .9rem; }
+    .nav a:hover { color: white; }
+    .hero {
+      width: min(1240px, calc(100% - 48px));
+      min-height: calc(100vh - 88px);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(320px, .65fr);
+      align-items: center;
+      gap: 56px;
+      padding: 72px 0 110px;
+    }
+    .eyebrow { margin: 0 0 18px; color: var(--gold); font-size: .78rem; font-weight: 800; letter-spacing: .22em; text-transform: uppercase; }
+    h1 { margin: 0; max-width: 780px; font-family: Georgia, "Times New Roman", serif; font-size: clamp(3.4rem, 7.5vw, 7.4rem); line-height: .9; font-weight: 500; letter-spacing: -.045em; }
+    h1 span { display: block; color: var(--gold); font-style: italic; }
+    .lead { max-width: 650px; margin: 28px 0 0; color: var(--muted); font-size: clamp(1rem, 1.5vw, 1.22rem); line-height: 1.75; }
+    .hero-actions { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; margin-top: 34px; }
+    .primary-button { border: 1px solid var(--gold); border-radius: 999px; padding: 14px 22px; background: rgba(111,22,40,.86); color: white; font-weight: 800; box-shadow: 0 14px 36px rgba(0,0,0,.25); }
+    .hint { color: #d8c4ad; font-size: .92rem; }
+    .feature-panel { justify-self: end; width: min(430px, 100%); padding: 28px; border-radius: 28px; border: 1px solid rgba(215,173,104,.32); background: linear-gradient(145deg, rgba(33,12,18,.82), rgba(18,7,10,.58)); backdrop-filter: blur(16px); box-shadow: 0 28px 80px rgba(0,0,0,.34); }
+    .feature-panel h2 { margin: 0 0 8px; font-family: Georgia, serif; font-size: 1.65rem; font-weight: 500; }
+    .feature-panel > p { margin: 0 0 24px; color: var(--muted); line-height: 1.55; }
+    .features { display: grid; gap: 12px; }
+    .feature { display: grid; grid-template-columns: 42px 1fr; gap: 14px; align-items: center; padding: 14px; border-radius: 18px; background: rgba(255,255,255,.045); }
+    .feature-icon { width: 42px; height: 42px; border-radius: 14px; display: grid; place-items: center; background: rgba(215,173,104,.12); color: var(--gold); font-size: 1.15rem; }
+    .feature strong { display: block; margin-bottom: 3px; }
+    .feature small { color: #bda993; line-height: 1.35; }
+    .footer-note { position: absolute; left: 24px; bottom: 22px; color: rgba(248,234,214,.55); font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; }
+    @media (max-width: 860px) {
+      .nav { display: none; }
+      .hero { grid-template-columns: 1fr; min-height: auto; padding: 60px 0 120px; }
+      .feature-panel { justify-self: start; }
+      h1 { font-size: clamp(3.2rem, 15vw, 5.8rem); }
+    }
+    @media (max-width: 540px) {
+      .site-header, .hero { width: min(100% - 28px, 1240px); }
+      .site-header { padding: 18px 0; }
+      .hero { gap: 38px; padding-top: 44px; }
+      .feature-panel { padding: 20px; border-radius: 22px; }
+      .footer-note { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="#" aria-label="WINE AI home"><span class="brand-mark">W</span><span>WINE AI</span></a>
+    <nav class="nav" aria-label="Main navigation">
+      <a href="#discover">Discover</a>
+      <a href="#wineries">Wineries</a>
+      <a href="#routes">Wine routes</a>
+      <a href="#about">About Moldova</a>
+    </nav>
+  </header>
+
+  <main class="hero">
+    <section>
+      <p class="eyebrow">Digital Sommelier of Moldova</p>
+      <h1>Moldovan wine <span>has found its voice.</span></h1>
+      <p class="lead">Meet a multilingual AI sommelier that knows Moldovan wineries, grape varieties and food pairings — and can also keep up a natural conversation beyond wine.</p>
+      <div class="hero-actions">
+        <button class="primary-button" type="button" onclick="window.__wineMdVoiceLiteWidget?.open()">Talk to the sommelier</button>
+        <span class="hint">Open the portrait in the lower-right corner</span>
+      </div>
+    </section>
+
+    <aside class="feature-panel" id="discover">
+      <h2>Your personal wine guide</h2>
+      <p>Ask naturally. The assistant listens, understands your language and answers by voice.</p>
+      <div class="features">
+        <div class="feature"><span class="feature-icon">◇</span><div><strong>Discover wines</strong><small>Styles, varieties, aromas and pairings</small></div></div>
+        <div class="feature"><span class="feature-icon">⌖</span><div><strong>Explore Moldova</strong><small>Wine regions, wineries and routes</small></div></div>
+        <div class="feature"><span class="feature-icon">◌</span><div><strong>Speak freely</strong><small>Wine knowledge first, open conversation when needed</small></div></div>
+      </div>
+    </aside>
+  </main>
+
+  <div class="footer-note">WINE AI · Moldova · Voice-first experience</div>
+  <script src="/widget/loader.js" data-client-id="winemd"></script>
+</body>
+</html>

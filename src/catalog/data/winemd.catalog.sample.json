@@ -1,0 +1,5 @@
+[
+  {"id":"product-feteasca-neagra","name":"Fetească Neagră","winery":"Demo Winery","imageUrl":"/assets/wines/feteasca-neagra.svg","productUrl":"https://wine.md/","price":"189 MDL","inStock":true,"volume":"750 мл"},
+  {"id":"product-rara-neagra","name":"Rară Neagră","winery":"Demo Winery","imageUrl":"/assets/wines/rara-neagra.svg","productUrl":"https://wine.md/","price":"169 MDL","inStock":true,"volume":"750 мл"},
+  {"id":"product-feteasca-alba","name":"Fetească Albă","winery":"Demo Winery","imageUrl":"/assets/wines/feteasca-alba.svg","productUrl":"https://wine.md/","price":"149 MDL","inStock":true,"volume":"750 мл"}
+]
