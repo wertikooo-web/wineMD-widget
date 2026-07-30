@@ -1,0 +1,12 @@
+node_modules/
+.env
+coverage/
+.DS_Store
+npm-debug.log*
+data/documents/runtime/*
+!data/documents/runtime/.gitkeep
+data/benchmark/runtime/*
+data/knowledge/runtime/*
+data/settings/*
+data/auth/secret.key
+data/auth/users.json
