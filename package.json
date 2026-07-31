@@ -1,6 +1,6 @@
 {
   "name": "wine-md-voice-lite",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -8,7 +8,8 @@
     "test": "node --test",
     "knowledge:ingest": "node scripts/ingest-documents.js",
     "knowledge:embed": "node scripts/reindex-embeddings.js",
-    "db:migrate": "node scripts/migrate-postgres.js"
+    "db:migrate": "node scripts/migrate-postgres.js",
+    "db:migrate:knowledge-v1": "node scripts/migrate-knowledge-v1.js"
   },
   "dependencies": {
     "dotenv": "^17.4.2",
