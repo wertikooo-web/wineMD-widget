@@ -88,8 +88,8 @@ export class JsonKnowledgeStore {
           `INSERT INTO knowledge_entities(id,type,canonical_name,normalized_name,aliases,descriptions)
            VALUES($1,$2,$3,$4,$5::jsonb,$6::jsonb)
            ON CONFLICT(type,normalized_name) DO UPDATE SET
-             aliases=(SELECT jsonb_agg(DISTINCT value) FROM jsonb_array_elements(knowledge_entities.aliases || EXCLUDED.aliases)),
-             descriptions=(SELECT jsonb_agg(DISTINCT value) FROM jsonb_array_elements(knowledge_entities.descriptions || EXCLUDED.descriptions)),
+             aliases=COALESCE((SELECT jsonb_agg(DISTINCT value) FROM jsonb_array_elements(knowledge_entities.aliases || EXCLUDED.aliases)), '[]'::jsonb),
+             descriptions=COALESCE((SELECT jsonb_agg(DISTINCT value) FROM jsonb_array_elements(knowledge_entities.descriptions || EXCLUDED.descriptions)), '[]'::jsonb),
              updated_at=now()
            RETURNING id`,
           [entityId,type,canonicalName,normalizedName,JSON.stringify(aliases),JSON.stringify(descriptions)]
