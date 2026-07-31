@@ -9,7 +9,8 @@
     "knowledge:ingest": "node scripts/ingest-documents.js",
     "knowledge:embed": "node scripts/reindex-embeddings.js",
     "db:migrate": "node scripts/migrate-postgres.js",
-    "db:migrate:knowledge-v1": "node scripts/migrate-knowledge-v1.js"
+    "db:migrate:knowledge-v1": "node scripts/migrate-knowledge-v1.js",
+    "db:verify:knowledge-v1": "node scripts/verify-knowledge-v1.js"
   },
   "dependencies": {
     "dotenv": "^17.4.2",
