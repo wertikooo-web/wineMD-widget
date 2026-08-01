@@ -49,8 +49,9 @@ function positiveInt(value, fallback, max = 200) {
 }
 
 export function createRequestHandler(config, dependencies = {}) {
-  const base = createBaseRequestHandler(config, dependencies);
   const authService = dependencies.authService ?? createAuthService(config);
+  const sharedDependencies = { ...dependencies, authService };
+  const base = createBaseRequestHandler(config, sharedDependencies);
   const studio = dependencies.knowledgeStudio ?? new KnowledgeStudioService();
 
   function currentAdmin(req) {
