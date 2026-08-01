@@ -4,7 +4,9 @@ on:
   pull_request:
     branches: [main]
   push:
-    branches: [feature/knowledge-architecture-v1]
+    branches:
+      - feature/knowledge-architecture-v1
+      - feature/knowledge-studio-v2
 
 jobs:
   test:
