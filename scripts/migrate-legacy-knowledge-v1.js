@@ -12,6 +12,8 @@ if (!postgresEnabled()) {
 const db = getPool();
 const id = (prefix, value) => `${prefix}-${crypto.createHash('sha256').update(String(value)).digest('hex').slice(0, 20)}`;
 const norm = value => String(value ?? '').trim().toLocaleLowerCase().replace(/\s+/g, ' ');
+const predicateKey = value => norm(value).replace(/[^\p{L}\p{N}]+/gu, '_').replace(/^_+|_+$/g, '').slice(0, 120) || 'unknown_relation';
+const humanLabel = value => String(value ?? '').replace(/[_-]+/g, ' ').trim() || 'Неизвестная связь';
 
 const typeMap = new Map([
   ['winery', 'winery'], ['wine producer', 'winery'], ['producer', 'winery'],
@@ -22,7 +24,8 @@ const typeMap = new Map([
   ['terroir', 'terroir'], ['aroma', 'aroma'], ['flavor', 'flavor'], ['food', 'food'], ['dish', 'dish'],
   ['tradition', 'tradition'], ['historical_event', 'historical_event'], ['historical event', 'historical_event'],
   ['person', 'person'], ['organization', 'organization'], ['route', 'wine_route'], ['wine_route', 'wine_route'],
-  ['tour', 'tour'], ['tasting', 'tasting'], ['event', 'event'], ['shop', 'shop'], ['product', 'product']
+  ['tour', 'tour'], ['tasting', 'tasting'], ['event', 'event'], ['shop', 'shop'], ['product', 'product'],
+  ['award', 'award'], ['production_method', 'production_method'], ['production method', 'production_method']
 ]);
 
 const predicateMap = new Map([
@@ -38,7 +41,10 @@ const predicateMap = new Map([
   ['offers_tour', 'offers_tour'], ['offers_tasting', 'offers_tasting'], ['has_duration', 'has_duration'],
   ['has_price', 'has_price'], ['available_at', 'available_at'], ['sold_by', 'sold_by'],
   ['has_vintage', 'has_vintage'], ['vintage', 'has_vintage'], ['has_alcohol', 'has_alcohol'],
-  ['has_history', 'has_history'], ['associated_with_tradition', 'associated_with_tradition']
+  ['has_history', 'has_history'], ['associated_with_tradition', 'associated_with_tradition'],
+  ['won_award', 'won_award'], ['uses_method', 'uses_method'], ['has_address', 'has_address'],
+  ['has_phone', 'has_phone'], ['has_website', 'has_website'], ['has_capacity', 'has_capacity'],
+  ['has_owner', 'has_owner'], ['member_of', 'member_of'], ['established_by', 'established_by']
 ]);
 
 const excludedPredicates = new Set([
@@ -52,15 +58,28 @@ function classifyType(rawType) {
 }
 
 function classifyPredicate(rawPredicate) {
-  const normalized = norm(rawPredicate).replace(/[\s-]+/g, '_');
-  if (excludedPredicates.has(normalized)) return { predicate: null, relevance: 'irrelevant' };
-  return { predicate: predicateMap.get(normalized) ?? null, relevance: predicateMap.has(normalized) ? 'core' : 'needs_review' };
+  const normalized = predicateKey(rawPredicate);
+  if (excludedPredicates.has(normalized)) return { predicate: null, relevance: 'irrelevant', generated: false };
+  const mapped = predicateMap.get(normalized);
+  return mapped
+    ? { predicate: mapped, relevance: 'core', generated: false }
+    : { predicate: normalized, relevance: 'needs_review', generated: true };
 }
 
 async function ensureLegacyDocument(documentId) {
+  const safeId = documentId || 'legacy-unknown-document';
   await db.query(`INSERT INTO documents(id,title,file_name,source_type,status,indexed_at,extracted_at,metadata)
     VALUES($1,$2,$3,'book','extracted',now(),now(),$4::jsonb)
-    ON CONFLICT(id) DO NOTHING`, [documentId, documentId, documentId, JSON.stringify({ migratedFrom: 'legacy_knowledge' })]);
+    ON CONFLICT(id) DO NOTHING`, [safeId, safeId, safeId, JSON.stringify({ migratedFrom: 'legacy_knowledge' })]);
+  return safeId;
+}
+
+async function ensurePredicate(rawPredicate, classification) {
+  if (!classification.predicate) return;
+  const label = humanLabel(rawPredicate);
+  await db.query(`INSERT INTO predicate_catalog(predicate,label_ru,label_ro,label_en,description,active)
+    VALUES($1,$2,$2,$2,$3,true)
+    ON CONFLICT(predicate) DO UPDATE SET active=true`, [classification.predicate, label, classification.generated ? 'Автоматически перенесено из старой базы. Требует проверки.' : '']);
 }
 
 try {
@@ -80,8 +99,7 @@ try {
         relevance=EXCLUDED.relevance,updated_at=EXCLUDED.updated_at`,
       [row.id, entityType, row.canonical_name, row.normalized_name, shortDescription, relevance, row.created_at, row.updated_at]);
 
-    const aliases = Array.isArray(row.aliases) ? row.aliases : [];
-    for (const alias of aliases) {
+    for (const alias of Array.isArray(row.aliases) ? row.aliases : []) {
       if (!String(alias).trim()) continue;
       await db.query(`INSERT INTO entity_aliases(entity_id,alias,normalized_alias)
         VALUES($1,$2,$3) ON CONFLICT(entity_id,normalized_alias) DO NOTHING`, [row.id, String(alias).trim(), norm(alias)]);
@@ -102,38 +120,37 @@ try {
   let irrelevant = 0;
 
   for (const row of facts.rows) {
-    await ensureLegacyDocument(row.document_id);
+    const documentId = await ensureLegacyDocument(row.document_id);
     const classification = classifyPredicate(row.predicate);
     if (!classification.predicate) {
       irrelevant += 1;
       await db.query(`INSERT INTO review_actions(target_type,target_id,action,old_value,comment,actor)
-        VALUES('legacy_fact',$1,$2,$3::jsonb,$4,'migration')`, [row.id, classification.relevance === 'irrelevant' ? 'hide' : 'needs_review', JSON.stringify(row), `Unknown or excluded predicate: ${row.predicate}`]);
+        SELECT 'legacy_fact',$1,'hide',$2::jsonb,$3,'migration'
+        WHERE NOT EXISTS (SELECT 1 FROM review_actions WHERE target_type='legacy_fact' AND target_id=$1 AND action='hide')`,
+        [row.id, JSON.stringify(row), `Excluded publishing metadata: ${row.predicate}`]);
       continue;
     }
 
-    const targetStatus = classification.relevance === 'needs_review' ? 'needs_review' : row.status;
+    await ensurePredicate(row.predicate, classification);
+    const targetStatus = classification.relevance === 'needs_review' ? 'needs_review' : (row.status || 'extracted');
     if (targetStatus === 'needs_review') needsReview += 1;
 
     const factId = id('factv1', row.id);
     await db.query(`INSERT INTO facts(id,subject_entity_id,predicate,object_entity_id,text_value,confidence,status,relevance,created_at,updated_at)
       VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$9)
-      ON CONFLICT(id) DO NOTHING`, [factId,row.subject_entity_id,classification.predicate,row.object_entity_id,row.value,row.confidence,targetStatus,classification.relevance,row.created_at]);
+      ON CONFLICT(id) DO UPDATE SET predicate=EXCLUDED.predicate,object_entity_id=EXCLUDED.object_entity_id,
+        text_value=EXCLUDED.text_value,confidence=EXCLUDED.confidence,relevance=EXCLUDED.relevance`,
+      [factId,row.subject_entity_id,classification.predicate,row.object_entity_id,row.value,row.confidence,targetStatus,classification.relevance,row.created_at]);
 
     await db.query(`INSERT INTO fact_sources(fact_id,document_id,source_quote)
       SELECT $1,$2,$3 WHERE NOT EXISTS (
         SELECT 1 FROM fact_sources WHERE fact_id=$1 AND document_id=$2 AND COALESCE(source_quote,'')=COALESCE($3,'')
-      )`, [factId,row.document_id,row.source_text]);
+      )`, [factId,documentId,row.source_text]);
     migrated += 1;
   }
 
   await db.query('COMMIT');
-  console.log(JSON.stringify({
-    ok: true,
-    entitiesMigrated: entities.rowCount,
-    factsMigrated: migrated,
-    factsNeedsReview: needsReview,
-    factsExcluded: irrelevant
-  }, null, 2));
+  console.log(JSON.stringify({ ok: true, entitiesMigrated: entities.rowCount, factsMigrated: migrated, factsNeedsReview: needsReview, factsExcluded: irrelevant }, null, 2));
 } catch (error) {
   await db.query('ROLLBACK');
   console.error(error);
