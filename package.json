@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node src/server.js",
     "test": "node --test",
+    "check:knowledge-v1": "node --check src/appWithKnowledgeStudio.js && node --check src/appWithCatalogSync.js && node --check src/catalog/WineMdCatalogSyncService.js && node --check src/knowledge/studio/KnowledgeStudioService.js",
     "knowledge:ingest": "node scripts/ingest-documents.js",
     "knowledge:embed": "node scripts/reindex-embeddings.js",
     "db:migrate": "node scripts/migrate-postgres.js",
