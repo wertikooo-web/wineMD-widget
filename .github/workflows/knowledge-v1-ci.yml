@@ -1,0 +1,49 @@
+name: Knowledge Architecture v1 CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [feature/knowledge-architecture-v1]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: wineai_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d wineai_test"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    env:
+      DATABASE_URL: postgresql://postgres:postgres@localhost:5432/wineai_test
+      PGSSL: "false"
+      AUTH_SECURE_COOKIES: "false"
+      OPENAI_API_KEY: test-key
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - name: Syntax check
+        run: npm run check:knowledge-v1
+      - name: Existing tests
+        run: npm test
+      - name: Create legacy schema
+        run: npm run db:migrate
+      - name: Create v1 schema
+        run: npm run db:migrate:knowledge-v1
+      - name: Migrate legacy data
+        run: npm run db:migrate:knowledge-v1:legacy
+      - name: Verify v1 schema
+        run: npm run db:verify:knowledge-v1
