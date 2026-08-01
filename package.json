@@ -1,14 +1,19 @@
 {
   "name": "wine-md-voice-lite",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "private": true,
   "type": "module",
   "scripts": {
     "start": "node src/server.js",
     "test": "node --test",
+    "check:knowledge-v1": "node --check src/appWithKnowledgeStudio.js && node --check src/appWithCatalogSync.js && node --check src/catalog/WineMdCatalogSyncService.js && node --check src/knowledge/studio/KnowledgeStudioService.js",
     "knowledge:ingest": "node scripts/ingest-documents.js",
     "knowledge:embed": "node scripts/reindex-embeddings.js",
-    "db:migrate": "node scripts/migrate-postgres.js"
+    "db:migrate": "node scripts/migrate-postgres.js",
+    "db:migrate:knowledge-v1": "node scripts/migrate-knowledge-v1.js",
+    "db:migrate:knowledge-v1:legacy": "node scripts/migrate-legacy-knowledge-v1.js",
+    "db:verify:knowledge-v1": "node scripts/verify-knowledge-v1.js",
+    "db:prepare": "npm run db:migrate && npm run db:migrate:knowledge-v1 && npm run db:migrate:knowledge-v1:legacy && npm run db:verify:knowledge-v1"
   },
   "dependencies": {
     "dotenv": "^17.4.2",
