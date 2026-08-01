@@ -2,10 +2,12 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import { ensurePostgresSchema, getPool, postgresEnabled } from '../db/Postgres.js';
 
+const ANSWER_MODES = new Set(['knowledge_only','knowledge_catalog','knowledge_web','expert','general_chat']);
+
 const DEFAULTS = Object.freeze({
-  answerMode: 'knowledge_only',
-  systemPrompt: 'Ты — дружелюбный цифровой сомелье WINE AI. Отвечай точно, естественно и без выдуманных фактов.',
-  answerLength: 'medium',
+  answerMode: 'knowledge_web',
+  systemPrompt: 'Ты — цифровой сомелье WINE AI. Отвечай уверенно, точно, естественно и практично. Соблюдай ограничения пользователя, не выдумывай факты и не раскрывай внутреннее устройство источников.',
+  answerLength: 'detailed',
   voiceStyle: 'sommelier',
   voice: 'marin',
   defaultLanguage: 'auto',
@@ -14,7 +16,7 @@ const DEFAULTS = Object.freeze({
 
 function sanitize(input = {}) {
   return {
-    answerMode: input.answerMode === 'knowledge_only' ? 'knowledge_only' : 'general_chat',
+    answerMode: ANSWER_MODES.has(input.answerMode) ? input.answerMode : DEFAULTS.answerMode,
     systemPrompt: String(input.systemPrompt ?? DEFAULTS.systemPrompt).trim().slice(0, 12000) || DEFAULTS.systemPrompt,
     answerLength: ['short','medium','detailed'].includes(input.answerLength) ? input.answerLength : DEFAULTS.answerLength,
     voiceStyle: ['professional','friendly','sommelier','storyteller'].includes(input.voiceStyle) ? input.voiceStyle : DEFAULTS.voiceStyle,
