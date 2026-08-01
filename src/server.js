@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 dotenv.config({ override: true });
 
 import http from 'node:http';
-import { createRequestHandler } from './app.js';
+import { createRequestHandler } from './appWithKnowledgeStudio.js';
 import { loadConfig } from './config.js';
 
 const config = loadConfig();
