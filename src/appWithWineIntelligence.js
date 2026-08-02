@@ -2,6 +2,7 @@ import { createRequestHandler as createCatalogHandler } from './appWithCatalogSy
 import { createAuthService } from './auth/createAuthService.js';
 import { parseCookies } from './auth/AuthService.js';
 import { extractConstraints, validateConstraints } from './intelligence/ConstraintEngine.js';
+import { auditRoutePlan } from './intelligence/RoutePlanner.js';
 
 function sendJson(res, statusCode, body) {
   const payload = JSON.stringify(body);
@@ -13,7 +14,7 @@ function sendJson(res, statusCode, body) {
   res.end(payload);
 }
 
-async function readJson(req, maxBytes = 128 * 1024) {
+async function readJson(req, maxBytes = 256 * 1024) {
   const chunks = [];
   let total = 0;
   for await (const chunk of req) {
@@ -44,6 +45,7 @@ function sameOrigin(req) {
 export function createRequestHandler(config, dependencies = {}) {
   const authService = dependencies.authService ?? createAuthService(config);
   const base = createCatalogHandler(config, { ...dependencies, authService });
+  const paths = new Set(['/api/admin/wine-intelligence/validate','/api/admin/wine-intelligence/route-audit']);
 
   function currentAdmin(req) {
     const token = parseCookies(req.headers.cookie ?? '').winemd_admin_session;
@@ -52,7 +54,7 @@ export function createRequestHandler(config, dependencies = {}) {
 
   return async function wineIntelligenceHandler(req, res) {
     const requestUrl = new URL(req.url ?? '/', 'http://localhost');
-    if (requestUrl.pathname !== '/api/admin/wine-intelligence/validate') return base(req, res);
+    if (!paths.has(requestUrl.pathname)) return base(req, res);
 
     try {
       if (!currentAdmin(req)) return sendJson(res, 401, { error: 'UNAUTHORIZED' });
@@ -61,11 +63,18 @@ export function createRequestHandler(config, dependencies = {}) {
 
       const payload = await readJson(req);
       const query = typeof payload.query === 'string' ? payload.query.trim() : '';
-      const answer = typeof payload.answer === 'string' ? payload.answer.trim() : '';
-      if (query.length < 2 || answer.length < 1) {
-        return sendJson(res, 422, { error: 'INVALID_VALIDATION_INPUT', message: 'Нужны вопрос и ответ.' });
+      if (query.length < 2) return sendJson(res, 422, { error: 'INVALID_QUERY', message: 'Нужен исходный вопрос пользователя.' });
+
+      if (requestUrl.pathname.endsWith('/route-audit')) {
+        if (!payload.plan || typeof payload.plan !== 'object') {
+          return sendJson(res, 422, { error: 'INVALID_ROUTE_PLAN', message: 'Нужен объект plan со списком stops.' });
+        }
+        const report = auditRoutePlan({ query, plan: payload.plan });
+        return sendJson(res, 200, { ok: true, report });
       }
 
+      const answer = typeof payload.answer === 'string' ? payload.answer.trim() : '';
+      if (!answer) return sendJson(res, 422, { error: 'INVALID_VALIDATION_INPUT', message: 'Нужен ответ для проверки.' });
       const constraints = extractConstraints(query);
       const report = validateConstraints({ query, answer, constraints });
       return sendJson(res, 200, { ok: true, constraints, report });
