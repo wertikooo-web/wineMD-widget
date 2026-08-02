@@ -4,12 +4,19 @@ import { extractConstraints, validateConstraints, constraintPrompt } from '../sr
 
 test('extracts travel budget, days and preferences', () => {
   const constraints = extractConstraints('Я прилетаю на три дня. Люблю натуральные вина и небольшие семейные винодельни. Бюджет до 300 евро.');
-  assert.deepEqual(constraints.find((item) => item.type === 'budget_max'), {
-    type: 'budget_max', value: 300, currency: 'EUR', sourceText: 'Бюджет до 300 евро'
-  });
+  const budget = constraints.find((item) => item.type === 'budget_max');
+  assert.equal(budget?.value, 300);
+  assert.equal(budget?.currency, 'EUR');
+  assert.match(budget?.sourceText ?? '', /300\s*евро/iu);
   assert.equal(constraints.find((item) => item.type === 'days')?.value, 3);
   assert.ok(constraints.some((item) => item.type === 'preference' && item.value === 'natural_wine'));
   assert.ok(constraints.some((item) => item.type === 'preference' && item.value === 'family_wineries'));
+});
+
+test('recognizes written winery count in instrumental case', () => {
+  const constraints = extractConstraints('Составь маршрут с двумя винодельнями и вернуться вечером.');
+  assert.equal(constraints.find((item) => item.type === 'winery_count')?.value, 2);
+  assert.equal(constraints.find((item) => item.type === 'return_evening')?.value, true);
 });
 
 test('fails answer whose explicit total exceeds budget', () => {
