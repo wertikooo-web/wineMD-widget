@@ -1,7 +1,16 @@
 const MONEY_RE = /(\d+(?:[.,]\d+)?)\s*(?:[-–]\s*(\d+(?:[.,]\d+)?)\s*)?(евро|€|eur|леев|лей|mdl)/giu;
+const NUMBER_TOKEN = '(?:\\d+|один|одна|одно|два|две|три|четыре|пять|двумя|тремя|четырьмя|пятью)';
+const NUMBER_WORDS = new Map([
+  ['один', 1], ['одна', 1], ['одно', 1],
+  ['два', 2], ['две', 2], ['двумя', 2],
+  ['три', 3], ['тремя', 3],
+  ['четыре', 4], ['четырьмя', 4],
+  ['пять', 5], ['пятью', 5]
+]);
 
 function number(value) {
-  return Number(String(value).replace(',', '.'));
+  const normalized = String(value).trim().toLowerCase().replace(',', '.');
+  return NUMBER_WORDS.get(normalized) ?? Number(normalized);
 }
 
 function normalizeCurrency(value) {
@@ -17,6 +26,13 @@ function unique(items, key) {
     seen.add(value);
     return true;
   });
+}
+
+function matchNumber(text, pattern) {
+  const match = String(text).match(pattern);
+  if (!match) return null;
+  const value = number(match[1]);
+  return Number.isFinite(value) ? { match, value } : null;
 }
 
 export function extractConstraints(query = '') {
@@ -35,14 +51,14 @@ export function extractConstraints(query = '') {
     }
   }
 
-  const days = text.match(/(?:на|за)\s*(\d+)\s*(?:дня|дней|день)/iu);
-  if (days) constraints.push({ type: 'days', value: Number(days[1]), sourceText: days[0] });
+  const days = matchNumber(text, new RegExp(`(?:на|за)\\s*(${NUMBER_TOKEN})\\s*(?:дня|дней|день)`, 'iu'));
+  if (days) constraints.push({ type: 'days', value: days.value, sourceText: days.match[0] });
 
-  const wineries = text.match(/(?:посетить|хочу|нужно)?\s*(\d+)\s*(?:винодельни|виноделен|винодельню)/iu);
-  if (wineries) constraints.push({ type: 'winery_count', value: Number(wineries[1]), sourceText: wineries[0] });
+  const wineries = matchNumber(text, new RegExp(`(?:посетить|хочу|нужно|с)?\\s*(${NUMBER_TOKEN})\\s*(?:винодельни|виноделен|винодельню|винодельнями)`, 'iu'));
+  if (wineries) constraints.push({ type: 'winery_count', value: wineries.value, sourceText: wineries.match[0] });
 
-  const options = text.match(/(?:назови|посоветуй|предложи|дай)\s*(\d+)\s*(?:вина|варианта|вариантов|винодельни|виноделен)/iu);
-  if (options) constraints.push({ type: 'option_count', value: Number(options[1]), sourceText: options[0] });
+  const options = matchNumber(text, new RegExp(`(?:назови|посоветуй|предложи|дай)\\s*(${NUMBER_TOKEN})\\s*(?:вина|варианта|вариантов|винодельни|виноделен)`, 'iu'));
+  if (options) constraints.push({ type: 'option_count', value: options.value, sourceText: options.match[0] });
 
   if (/вернут(?:ься|ся)?\s+(?:в\s+кишин[её]в\s+)?вечером|вернуться вечером/iu.test(text)) {
     constraints.push({ type: 'return_evening', value: true, sourceText: 'вернуться вечером' });
@@ -125,7 +141,7 @@ export function validateConstraints({ query = '', answer = '', constraints = ext
 
     if (constraint.type === 'option_count') {
       const count = countNumberedItems(answer);
-      checks.push({ ...constraint, status: count === constraint.value ? 'pass' : count ? 'fail' : 'unknown', actual: count || null, message: count === constraint.value ? `Дано ${constraint.value} варианта.` : `Число вариантов не совпадает или не распознано.` });
+      checks.push({ ...constraint, status: count === constraint.value ? 'pass' : count ? 'fail' : 'unknown', actual: count || null, message: count === constraint.value ? `Дано ${constraint.value} варианта.` : 'Число вариантов не совпадает или не распознано.' });
     }
   }
 
