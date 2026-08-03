@@ -2,6 +2,7 @@ import { createRequestHandler as createBaseRequestHandler } from './app.js';
 import { createAuthService } from './auth/createAuthService.js';
 import { parseCookies } from './auth/AuthService.js';
 import { KnowledgeStudioService } from './knowledge/studio/KnowledgeStudioService.js';
+import { KnowledgeEntityEditorService } from './knowledge/studio/KnowledgeEntityEditorService.js';
 
 function sendJson(res, statusCode, body) {
   const payload = JSON.stringify(body);
@@ -21,7 +22,9 @@ export function createRequestHandler(config, dependencies = {}) {
   const authService = dependencies.authService ?? createAuthService(config);
   const base = createBaseRequestHandler(config, {...dependencies, authService});
   const studio = dependencies.knowledgeStudio ?? new KnowledgeStudioService();
+  const entityEditor = dependencies.knowledgeEntityEditor ?? new KnowledgeEntityEditorService();
   function currentAdmin(req){const token=parseCookies(req.headers.cookie??'').winemd_admin_session;return authService.verifySession(token);}
+  function actor(admin){return admin.email??admin.name??'admin';}
 
   return async function knowledgeStudioAwareHandler(req,res){
     const requestUrl=new URL(req.url??'/','http://localhost');
@@ -31,7 +34,7 @@ export function createRequestHandler(config, dependencies = {}) {
       if(!admin)return sendJson(res,401,{error:'UNAUTHORIZED'});
       if(!sameOrigin(req))return sendJson(res,403,{error:'INVALID_ORIGIN'});
       const parts=requestUrl.pathname.split('/').filter(Boolean);
-      const section=parts[3]??''; const id=parts[4]?decodeURIComponent(parts[4]):''; const action=parts[5]??'';
+      const section=parts[3]??''; const id=parts[4]?decodeURIComponent(parts[4]):''; const action=parts[5]??''; const nestedId=parts[6]?decodeURIComponent(parts[6]):'';
 
       if(section==='overview'&&req.method==='GET')return sendJson(res,200,{ok:true,overview:await studio.overview()});
       if(section==='predicates'&&req.method==='GET')return sendJson(res,200,{ok:true,predicates:await studio.predicates()});
@@ -48,6 +51,28 @@ export function createRequestHandler(config, dependencies = {}) {
         const graph=await studio.graph(id,positiveInt(requestUrl.searchParams.get('depth'),1,2),positiveInt(requestUrl.searchParams.get('limit'),80,200));
         return graph?sendJson(res,200,{ok:true,graph}):sendJson(res,404,{error:'ENTITY_NOT_FOUND'});
       }
+      if(section==='entities'&&id&&action==='history'&&req.method==='GET'){
+        return sendJson(res,200,{ok:true,items:await entityEditor.history(id,positiveInt(requestUrl.searchParams.get('limit'),100,300))});
+      }
+      if(section==='entities'&&id&&action==='aliases'&&!nestedId&&req.method==='POST'){
+        const payload=await readJson(req);
+        const alias=await entityEditor.addAlias({entityId:id,alias:payload.alias,language:payload.language??null,comment:payload.comment??'',actor:actor(admin)});
+        return alias?sendJson(res,200,{ok:true,alias}):sendJson(res,404,{error:'ENTITY_NOT_FOUND'});
+      }
+      if(section==='entities'&&id&&action==='aliases'&&nestedId&&req.method==='DELETE'){
+        const payload=await readJson(req);
+        const alias=await entityEditor.deleteAlias({entityId:id,aliasId:nestedId,comment:payload.comment??'',actor:actor(admin)});
+        return alias?sendJson(res,200,{ok:true,alias}):sendJson(res,404,{error:'ALIAS_NOT_FOUND'});
+      }
+      if(section==='entities'&&id&&req.method==='PUT'){
+        const payload=await readJson(req);
+        const entity=await entityEditor.updateEntity({
+          entityId:id,canonicalName:payload.canonicalName,entityType:payload.entityType,
+          shortDescription:payload.shortDescription??null,status:payload.status,
+          comment:payload.comment??'',actor:actor(admin)
+        });
+        return entity?sendJson(res,200,{ok:true,entity}):sendJson(res,404,{error:'ENTITY_NOT_FOUND'});
+      }
       if(section==='entities'&&id&&req.method==='GET'){
         const entity=await studio.entityDetails(id);return entity?sendJson(res,200,{ok:true,entity}):sendJson(res,404,{error:'ENTITY_NOT_FOUND'});
       }
@@ -61,21 +86,22 @@ export function createRequestHandler(config, dependencies = {}) {
         return sendJson(res,200,{ok:true,...result});
       }
       if(section==='facts'&&id&&action==='review'&&req.method==='POST'){
-        const payload=await readJson(req);const fact=await studio.reviewFact({factId:id,action:payload.action,comment:payload.comment??'',actor:admin.email??admin.name??'admin'});
+        const payload=await readJson(req);const fact=await studio.reviewFact({factId:id,action:payload.action,comment:payload.comment??'',actor:actor(admin)});
         return fact?sendJson(res,200,{ok:true,fact}):sendJson(res,404,{error:'FACT_NOT_FOUND'});
       }
       if(section==='facts'&&id&&req.method==='GET'){
         const fact=await studio.factDetails(id);return fact?sendJson(res,200,{ok:true,fact}):sendJson(res,404,{error:'FACT_NOT_FOUND'});
       }
       if(section==='facts'&&id&&req.method==='PUT'){
-        const payload=await readJson(req);const fact=await studio.updateFact({factId:id,predicate:payload.predicate,objectEntityId:payload.objectEntityId??null,textValue:payload.textValue??null,numberValue:payload.numberValue??null,dateValue:payload.dateValue??null,unit:payload.unit??null,comment:payload.comment??'',actor:admin.email??admin.name??'admin'});
+        const payload=await readJson(req);const fact=await studio.updateFact({factId:id,predicate:payload.predicate,objectEntityId:payload.objectEntityId??null,textValue:payload.textValue??null,numberValue:payload.numberValue??null,dateValue:payload.dateValue??null,unit:payload.unit??null,comment:payload.comment??'',actor:actor(admin)});
         return fact?sendJson(res,200,{ok:true,fact}):sendJson(res,404,{error:'FACT_NOT_FOUND'});
       }
       return sendJson(res,405,{error:'Method not allowed'});
     }catch(error){
-      const status=error?.code==='POSTGRES_REQUIRED'?503:['INVALID_REVIEW_ACTION','UNKNOWN_PREDICATE','FACT_VALUE_REQUIRED','INVALID_JSON'].includes(error?.code)?422:error?.code==='BODY_TOO_LARGE'?413:500;
+      const validationCodes=['INVALID_REVIEW_ACTION','UNKNOWN_PREDICATE','FACT_VALUE_REQUIRED','INVALID_JSON','ENTITY_NAME_REQUIRED','INVALID_ENTITY_TYPE','INVALID_ENTITY_STATUS','ENTITY_DUPLICATE','ALIAS_REQUIRED'];
+      const status=error?.code==='POSTGRES_REQUIRED'?503:validationCodes.includes(error?.code)?422:error?.code==='BODY_TOO_LARGE'?413:500;
       console.error('[knowledge-studio]',error?.code??'UNKNOWN',error?.message??error);
-      return sendJson(res,status,{error:error?.code??'KNOWLEDGE_STUDIO_ERROR',message:error?.message??'Knowledge Studio error'});
+      return sendJson(res,status,{error:error?.code??'KNOWLEDGE_STUDIO_ERROR',message:error?.message??'Knowledge Studio error',duplicateEntityId:error?.duplicateEntityId??null});
     }
   };
 }
