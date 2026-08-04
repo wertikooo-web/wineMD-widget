@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node src/server.js",
     "test": "node --test",
-    "check:knowledge-v1": "node --check src/appWithKnowledgeStudio.js && node --check src/appWithCatalogSync.js && node --check src/appWithWineIntelligence.js && node --check src/intelligence/ConstraintEngine.js && node --check src/intelligence/RoutePlanner.js && node --check src/catalog/WineMdCatalogSyncService.js && node --check src/knowledge/studio/KnowledgeStudioService.js && node --check src/knowledge/studio/KnowledgeEntityEditorService.js",
+    "check:knowledge-v1": "node --check src/appWithKnowledgeStudio.js && node --check src/appWithCatalogSync.js && node --check src/appWithWineIntelligence.js && node --check src/intelligence/ConstraintEngine.js && node --check src/intelligence/RoutePlanner.js && node --check src/catalog/WineMdCatalogSyncService.js && node --check src/knowledge/studio/KnowledgeStudioService.js && node --check src/knowledge/studio/KnowledgeEntityEditorService.js && node --check src/knowledge/studio/KnowledgeEntityMergeService.js",
     "knowledge:ingest": "node scripts/ingest-documents.js",
     "knowledge:embed": "node scripts/reindex-embeddings.js",
     "db:migrate": "node scripts/migrate-postgres.js",
