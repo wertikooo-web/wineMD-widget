@@ -4,6 +4,7 @@ import { parseCookies } from './auth/AuthService.js';
 import { KnowledgeStudioService } from './knowledge/studio/KnowledgeStudioService.js';
 import { KnowledgeEntityEditorService } from './knowledge/studio/KnowledgeEntityEditorService.js';
 import { KnowledgeEntityMergeService } from './knowledge/studio/KnowledgeEntityMergeService.js';
+import { KnowledgeAuditService } from './knowledge/studio/KnowledgeAuditService.js';
 
 function sendJson(res, statusCode, body) {
   const payload = JSON.stringify(body);
@@ -25,6 +26,7 @@ export function createRequestHandler(config, dependencies = {}) {
   const studio = dependencies.knowledgeStudio ?? new KnowledgeStudioService();
   const entityEditor = dependencies.knowledgeEntityEditor ?? new KnowledgeEntityEditorService();
   const entityMerge = dependencies.knowledgeEntityMerge ?? new KnowledgeEntityMergeService();
+  const audit = dependencies.knowledgeAudit ?? new KnowledgeAuditService();
   function currentAdmin(req){const token=parseCookies(req.headers.cookie??'').winemd_admin_session;return authService.verifySession(token);}
   function actor(admin){return admin.email??admin.name??'admin';}
 
@@ -40,6 +42,19 @@ export function createRequestHandler(config, dependencies = {}) {
 
       if(section==='overview'&&req.method==='GET')return sendJson(res,200,{ok:true,overview:await studio.overview()});
       if(section==='predicates'&&req.method==='GET')return sendJson(res,200,{ok:true,predicates:await studio.predicates()});
+      if(section==='audit'&&!id&&req.method==='GET'){
+        const result=await audit.list({targetType:requestUrl.searchParams.get('targetType')??'',action:requestUrl.searchParams.get('action')??'',actor:requestUrl.searchParams.get('actor')??'',query:requestUrl.searchParams.get('query')??'',limit:positiveInt(requestUrl.searchParams.get('limit'),50),offset:positiveInt(requestUrl.searchParams.get('offset'),0,100000)});
+        return sendJson(res,200,{ok:true,...result});
+      }
+      if(section==='audit'&&id&&action==='revert'&&req.method==='POST'){
+        const payload=await readJson(req);
+        const result=await audit.revert({actionId:id,comment:payload.comment??'',actor:actor(admin)});
+        return result?sendJson(res,200,{ok:true,result}):sendJson(res,404,{error:'ACTION_NOT_FOUND'});
+      }
+      if(section==='audit'&&id&&req.method==='GET'){
+        const item=await audit.details(id);
+        return item?sendJson(res,200,{ok:true,item}):sendJson(res,404,{error:'ACTION_NOT_FOUND'});
+      }
 
       if(section==='entities'&&!id&&req.method==='GET'){
         const result=await studio.listEntities({query:requestUrl.searchParams.get('query')??'',type:requestUrl.searchParams.get('type')??'',status:requestUrl.searchParams.get('status')??'',sort:requestUrl.searchParams.get('sort')??'name',order:requestUrl.searchParams.get('order')??'asc',limit:positiveInt(requestUrl.searchParams.get('limit'),50),offset:positiveInt(requestUrl.searchParams.get('offset'),0,100000)});
@@ -90,11 +105,11 @@ export function createRequestHandler(config, dependencies = {}) {
       }
       return sendJson(res,405,{error:'Method not allowed'});
     }catch(error){
-      const validationCodes=['INVALID_REVIEW_ACTION','UNKNOWN_PREDICATE','FACT_VALUE_REQUIRED','INVALID_JSON','ENTITY_NAME_REQUIRED','INVALID_ENTITY_TYPE','INVALID_ENTITY_STATUS','ENTITY_DUPLICATE','ALIAS_REQUIRED','INVALID_MERGE_TARGET','MERGE_TYPE_MISMATCH'];
-      const conflictCodes=['MERGE_ENTITY_NOT_FOUND','MERGE_INCOMPLETE'];
+      const validationCodes=['INVALID_REVIEW_ACTION','UNKNOWN_PREDICATE','FACT_VALUE_REQUIRED','INVALID_JSON','ENTITY_NAME_REQUIRED','INVALID_ENTITY_TYPE','INVALID_ENTITY_STATUS','ENTITY_DUPLICATE','ALIAS_REQUIRED','INVALID_MERGE_TARGET','MERGE_TYPE_MISMATCH','ACTION_NOT_REVERSIBLE'];
+      const conflictCodes=['MERGE_ENTITY_NOT_FOUND','MERGE_INCOMPLETE','NEWER_ACTION_EXISTS','REVERT_TARGET_NOT_FOUND','REVERT_CONFLICT'];
       const status=error?.code==='POSTGRES_REQUIRED'?503:validationCodes.includes(error?.code)?422:conflictCodes.includes(error?.code)?409:error?.code==='BODY_TOO_LARGE'?413:500;
       console.error('[knowledge-studio]',error?.code??'UNKNOWN',error?.message??error);
-      return sendJson(res,status,{error:error?.code??'KNOWLEDGE_STUDIO_ERROR',message:error?.message??'Knowledge Studio error',duplicateEntityId:error?.duplicateEntityId??null,leftovers:error?.leftovers??null});
+      return sendJson(res,status,{error:error?.code??'KNOWLEDGE_STUDIO_ERROR',message:error?.message??'Knowledge Studio error',duplicateEntityId:error?.duplicateEntityId??null,leftovers:error?.leftovers??null,newerActionId:error?.newerActionId??null});
     }
   };
 }
