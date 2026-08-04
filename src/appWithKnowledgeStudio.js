@@ -3,6 +3,7 @@ import { createAuthService } from './auth/createAuthService.js';
 import { parseCookies } from './auth/AuthService.js';
 import { KnowledgeStudioService } from './knowledge/studio/KnowledgeStudioService.js';
 import { KnowledgeEntityEditorService } from './knowledge/studio/KnowledgeEntityEditorService.js';
+import { KnowledgeEntityMergeService } from './knowledge/studio/KnowledgeEntityMergeService.js';
 
 function sendJson(res, statusCode, body) {
   const payload = JSON.stringify(body);
@@ -23,6 +24,7 @@ export function createRequestHandler(config, dependencies = {}) {
   const base = createBaseRequestHandler(config, {...dependencies, authService});
   const studio = dependencies.knowledgeStudio ?? new KnowledgeStudioService();
   const entityEditor = dependencies.knowledgeEntityEditor ?? new KnowledgeEntityEditorService();
+  const entityMerge = dependencies.knowledgeEntityMerge ?? new KnowledgeEntityMergeService();
   function currentAdmin(req){const token=parseCookies(req.headers.cookie??'').winemd_admin_session;return authService.verifySession(token);}
   function actor(admin){return admin.email??admin.name??'admin';}
 
@@ -53,6 +55,16 @@ export function createRequestHandler(config, dependencies = {}) {
       }
       if(section==='entities'&&id&&action==='history'&&req.method==='GET'){
         return sendJson(res,200,{ok:true,items:await entityEditor.history(id,positiveInt(requestUrl.searchParams.get('limit'),100,300))});
+      }
+      if(section==='entities'&&id&&action==='merge-preview'&&req.method==='POST'){
+        const payload=await readJson(req);
+        const preview=await entityMerge.preview({sourceEntityId:id,targetEntityId:payload.targetEntityId});
+        return preview?sendJson(res,200,{ok:true,preview}):sendJson(res,404,{error:'ENTITY_NOT_FOUND'});
+      }
+      if(section==='entities'&&id&&action==='merge'&&req.method==='POST'){
+        const payload=await readJson(req);
+        const result=await entityMerge.merge({sourceEntityId:id,targetEntityId:payload.targetEntityId,comment:payload.comment??'',actor:actor(admin)});
+        return result?sendJson(res,200,{ok:true,result}):sendJson(res,404,{error:'ENTITY_NOT_FOUND'});
       }
       if(section==='entities'&&id&&action==='aliases'&&!nestedId&&req.method==='POST'){
         const payload=await readJson(req);
@@ -98,7 +110,7 @@ export function createRequestHandler(config, dependencies = {}) {
       }
       return sendJson(res,405,{error:'Method not allowed'});
     }catch(error){
-      const validationCodes=['INVALID_REVIEW_ACTION','UNKNOWN_PREDICATE','FACT_VALUE_REQUIRED','INVALID_JSON','ENTITY_NAME_REQUIRED','INVALID_ENTITY_TYPE','INVALID_ENTITY_STATUS','ENTITY_DUPLICATE','ALIAS_REQUIRED'];
+      const validationCodes=['INVALID_REVIEW_ACTION','UNKNOWN_PREDICATE','FACT_VALUE_REQUIRED','INVALID_JSON','ENTITY_NAME_REQUIRED','INVALID_ENTITY_TYPE','INVALID_ENTITY_STATUS','ENTITY_DUPLICATE','ALIAS_REQUIRED','INVALID_MERGE_TARGET','MERGE_TYPE_MISMATCH'];
       const status=error?.code==='POSTGRES_REQUIRED'?503:validationCodes.includes(error?.code)?422:error?.code==='BODY_TOO_LARGE'?413:500;
       console.error('[knowledge-studio]',error?.code??'UNKNOWN',error?.message??error);
       return sendJson(res,status,{error:error?.code??'KNOWLEDGE_STUDIO_ERROR',message:error?.message??'Knowledge Studio error',duplicateEntityId:error?.duplicateEntityId??null});
