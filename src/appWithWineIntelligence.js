@@ -1,8 +1,11 @@
+import path from 'node:path';
 import { createRequestHandler as createCatalogHandler } from './appWithCatalogSync.js';
 import { createAuthService } from './auth/createAuthService.js';
 import { parseCookies } from './auth/AuthService.js';
 import { extractConstraints, validateConstraints } from './intelligence/ConstraintEngine.js';
 import { auditRoutePlan } from './intelligence/RoutePlanner.js';
+import { BenchmarkDatasetRepository } from './benchmark/BenchmarkDatasetRepository.js';
+import { installWineAiMvpDataset, WINE_AI_MVP_DATASET_ID } from './benchmark/installWineAiMvpDataset.js';
 
 function sendJson(res, statusCode, body) {
   const payload = JSON.stringify(body);
@@ -45,7 +48,15 @@ function sameOrigin(req) {
 export function createRequestHandler(config, dependencies = {}) {
   const authService = dependencies.authService ?? createAuthService(config);
   const base = createCatalogHandler(config, { ...dependencies, authService });
-  const paths = new Set(['/api/admin/wine-intelligence/validate','/api/admin/wine-intelligence/route-audit']);
+  const benchmarkRepository = dependencies.benchmarkRepository ?? new BenchmarkDatasetRepository({
+    directory: config.benchmarkDatasetDir || path.join(process.cwd(), 'data', 'benchmark', 'runtime')
+  });
+  const paths = new Set([
+    '/api/admin/wine-intelligence/validate',
+    '/api/admin/wine-intelligence/route-audit',
+    '/api/admin/wine-intelligence/benchmark-mvp',
+    '/api/admin/wine-intelligence/benchmark-mvp/install'
+  ]);
 
   function currentAdmin(req) {
     const token = parseCookies(req.headers.cookie ?? '').winemd_admin_session;
@@ -59,8 +70,24 @@ export function createRequestHandler(config, dependencies = {}) {
     try {
       if (!currentAdmin(req)) return sendJson(res, 401, { error: 'UNAUTHORIZED' });
       if (!sameOrigin(req)) return sendJson(res, 403, { error: 'INVALID_ORIGIN' });
-      if (req.method !== 'POST') return sendJson(res, 405, { error: 'Method not allowed' });
 
+      if (requestUrl.pathname === '/api/admin/wine-intelligence/benchmark-mvp') {
+        if (req.method !== 'GET') return sendJson(res, 405, { error: 'Method not allowed' });
+        try {
+          const dataset = await benchmarkRepository.get(WINE_AI_MVP_DATASET_ID);
+          return sendJson(res, 200, { ok: true, installed: true, datasetId: dataset.datasetId, stats: dataset.stats, updatedAt: dataset.updatedAt });
+        } catch {
+          return sendJson(res, 200, { ok: true, installed: false, datasetId: WINE_AI_MVP_DATASET_ID });
+        }
+      }
+
+      if (requestUrl.pathname === '/api/admin/wine-intelligence/benchmark-mvp/install') {
+        if (req.method !== 'POST') return sendJson(res, 405, { error: 'Method not allowed' });
+        const dataset = await installWineAiMvpDataset(benchmarkRepository);
+        return sendJson(res, 200, { ok: true, datasetId: dataset.datasetId, stats: dataset.stats, updatedAt: dataset.updatedAt });
+      }
+
+      if (req.method !== 'POST') return sendJson(res, 405, { error: 'Method not allowed' });
       const payload = await readJson(req);
       const query = typeof payload.query === 'string' ? payload.query.trim() : '';
       if (query.length < 2) return sendJson(res, 422, { error: 'INVALID_QUERY', message: 'Нужен исходный вопрос пользователя.' });
