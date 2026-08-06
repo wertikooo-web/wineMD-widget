@@ -65,6 +65,28 @@ export async function ensurePostgresSchema(env = process.env) {
       processed_at timestamptz NOT NULL DEFAULT now()
     );
     CREATE INDEX IF NOT EXISTS knowledge_processed_document_idx ON knowledge_processed_chunks(document_id);
+    CREATE TABLE IF NOT EXISTS benchmark_runs (
+      run_id text PRIMARY KEY,
+      dataset_id text NOT NULL,
+      created_at timestamptz NOT NULL,
+      stats jsonb NOT NULL DEFAULT '{}'::jsonb,
+      payload jsonb NOT NULL
+    );
+    CREATE INDEX IF NOT EXISTS benchmark_runs_dataset_created_idx ON benchmark_runs(dataset_id, created_at DESC);
+    CREATE TABLE IF NOT EXISTS benchmark_run_jobs (
+      job_id text PRIMARY KEY,
+      dataset_id text,
+      status text NOT NULL,
+      phase text,
+      message text,
+      progress jsonb NOT NULL DEFAULT '{}'::jsonb,
+      run_id text,
+      stats jsonb,
+      error text,
+      created_at timestamptz NOT NULL,
+      updated_at timestamptz NOT NULL
+    );
+    CREATE INDEX IF NOT EXISTS benchmark_run_jobs_updated_idx ON benchmark_run_jobs(updated_at DESC);
   `).then(() => true);
   return schemaReady;
 }
